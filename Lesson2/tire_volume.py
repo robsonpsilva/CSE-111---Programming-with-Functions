@@ -26,17 +26,17 @@ try:
     #Exceeding requirements
     for t in tyres_prices:
         if t[0] == w and t[1] == a and t[2] == d:
-            print(f'The tyre prize is {t[3]:.2f}')
+            print(f'The tire prize is {t[3]:.2f}')
 
     with open('volumes.txt', 'at') as volumes_file:
         #Recording the file
         
         #Exceeding requirements
         option = input('Do you want to buy the tire you informed?: Type 1 for Yes or 2 for No.')
-        if option.lower == '1':
+        if option.lower() == '1':
             print(f'{current_date_and_time:%Y-%m-%d}, {w}, {a}, {d}, {v:.2f}, {t[3]:.2f}', file=volumes_file)
         else:
-            print(f'{current_date_and_time:%Y-%m-%d}, {w}, {a}, {d}, {v:.2f}', file=volumes_file)
+            print(f'Teste {current_date_and_time:%Y-%m-%d}, {w}, {a}, {d}, {v:.2f}', file=volumes_file)
 
 except ValueError:
     print('Attention: Data entry is not a number!')
