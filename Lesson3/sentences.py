@@ -111,3 +111,33 @@ def make_sentence(quantity, tense):
     quantity and tense of the verb will match the number
     and tense in the quantity and tense parameters.
     """
+    determiner = get_determiner(quantity)
+    noum = get_noun(quantity)
+    verb = get_verb(quantity, tense)
+
+    sentence = determiner + ' ' + noum + ' ' + verb
+    sentence = sentence.capitalize()
+    
+    return sentence
+
+def main():
+    #past singular
+    print(make_sentence(1,'past'))
+
+    #present singular
+    print(make_sentence(1,'present'))
+    
+    #future singular
+    print(make_sentence(1,'future'))
+
+    #past plural
+    print(make_sentence(2,'past'))
+
+    #present pliral
+    print(make_sentence(2,'present'))
+
+    #future plural
+    print(make_sentence(2,'future'))
+
+
+main()
