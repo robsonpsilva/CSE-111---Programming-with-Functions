@@ -1,6 +1,7 @@
 import math
 
 def main():
+
     #Storage efficiency to Can #1 Picnic
     print(f'#1 Picnic {compute_storage_efficiency(6.83, 10.16):.2f}')
 
