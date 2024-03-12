@@ -114,8 +114,9 @@ def make_sentence(quantity, tense):
     determiner = get_determiner(quantity)
     noum = get_noun(quantity)
     verb = get_verb(quantity, tense)
+    preprositional_phrase = get_prepositional_phrase(quantity)
 
-    sentence = determiner + ' ' + noum + ' ' + verb
+    sentence = determiner + ' ' + noum + ' ' + verb + ' ' + preprositional_phrase
     sentence = sentence.capitalize()
     
     return sentence
@@ -159,10 +160,11 @@ def get_prepositional_phrase(quantity):
     preposition = get_preposition()
 
     sentence = preposition + ' ' + determiner + ' ' + noum
-
+    return sentence
 
 
 def main():
+    print(' ')
     #past singular
     print(make_sentence(1,'past'))
 
@@ -181,5 +183,7 @@ def main():
     #future plural
     print(make_sentence(2,'future'))
 
+    print(' ')
+   
 
 main()
