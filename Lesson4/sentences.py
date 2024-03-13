@@ -104,27 +104,13 @@ def get_verb(quantity, tense):
     word = random.choice(words)
     return word
 
-def get_adjective():
-    words = ["my", "your", "his", "her", "its", "our", "their", "whose", "anybody's", "nobody's"]
-
-def make_sentence(quantity, tense):
-    """Build and return a sentence with three words:
-    a determiner, a noun, and a verb. The grammatical
-    quantity of the determiner and noun will match the
-    number in the quantity parameter. The grammatical
-    quantity and tense of the verb will match the number
-    and tense in the quantity and tense parameters.
-    """
-    determiner = get_determiner(quantity)
-    noum = get_noun(quantity)
-    verb = get_verb(quantity, tense)
-    preprositional_phrase = get_prepositional_phrase(quantity) #Exceeding the Requirements
-    preprositional_phrase_1 = get_prepositional_phrase(quantity)
-
-    sentence = preprositional_phrase + ' '+ determiner + ' ' + noum + ' ' + verb + ' ' + preprositional_phrase_1
-    sentence = sentence.capitalize()
+def get_adjective(): #Exceeding the Requirements
+    words = ["stunning", "lovely", "charming", "joyful", "adorable", "impressive", "fabulous", "magnificent", "splendid", "astonishing",
+             "good", "bad", "big", "small", "happy", "sad", "rich", "poor", "young", "old", "hot", "cold", "dry", "wet", "easy", "hard"]
     
-    return sentence
+    # Randomly choose and return an adjective
+    word = random.choice(words)
+    return word
 
 def get_preposition():
     """Return a randomly chosen preposition
@@ -167,6 +153,25 @@ def get_prepositional_phrase(quantity):
     sentence = preposition + ' ' + determiner + ' ' + noum
     return sentence
 
+def make_sentence(quantity, tense):
+    """Build and return a sentence with three words:
+    a determiner, a noun, and a verb. The grammatical
+    quantity of the determiner and noun will match the
+    number in the quantity parameter. The grammatical
+    quantity and tense of the verb will match the number
+    and tense in the quantity and tense parameters.
+    """
+    determiner = get_determiner(quantity)
+    noum = get_noun(quantity)
+    verb = get_verb(quantity, tense)
+    preprositional_phrase = get_prepositional_phrase(quantity) #Exceeding the Requirements
+    preprositional_phrase_1 = get_prepositional_phrase(quantity)
+    adjective = get_adjective()
+
+    sentence = preprositional_phrase + ' '+ determiner + ' ' + adjective + ' '+noum + ' ' + verb + ' ' + preprositional_phrase_1 #Exceeding the Requirements
+    sentence = sentence.capitalize()
+    
+    return sentence
 
 def main():
     print(' ')
