@@ -103,6 +103,10 @@ def get_verb(quantity, tense):
     # Randomly choose and return a determiner.
     word = random.choice(words)
     return word
+
+def get_adjective():
+    words = ["my", "your", "his", "her", "its", "our", "their", "whose", "anybody's", "nobody's"]
+
 def make_sentence(quantity, tense):
     """Build and return a sentence with three words:
     a determiner, a noun, and a verb. The grammatical
@@ -114,9 +118,10 @@ def make_sentence(quantity, tense):
     determiner = get_determiner(quantity)
     noum = get_noun(quantity)
     verb = get_verb(quantity, tense)
-    preprositional_phrase = get_prepositional_phrase(quantity)
+    preprositional_phrase = get_prepositional_phrase(quantity) #Exceeding the Requirements
+    preprositional_phrase_1 = get_prepositional_phrase(quantity)
 
-    sentence = determiner + ' ' + noum + ' ' + verb + ' ' + preprositional_phrase
+    sentence = preprositional_phrase + ' '+ determiner + ' ' + noum + ' ' + verb + ' ' + preprositional_phrase_1
     sentence = sentence.capitalize()
     
     return sentence
