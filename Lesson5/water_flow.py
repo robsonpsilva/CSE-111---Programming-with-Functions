@@ -11,3 +11,11 @@ def pressure_loss_from_pipe(pipe_diameter,
         pipe_length, friction_factor, fluid_velocity):
     pressure_loss = - friction_factor * pipe_length * 998.2 * (fluid_velocity ** 2) / (2000 * pipe_diameter)
     return pressure_loss
+
+def main():
+    ...
+
+# Start this program by
+# calling the main function.
+if __name__ == "__main__":
+    main()
