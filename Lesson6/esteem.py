@@ -28,3 +28,48 @@ def main():
           d means you disagree with the statement.\n\
           a means you agree with the statement.\n\
           A means you strongly agree with the statement.')
+
+    questions = ['I feel that I am a person of worth, at least on an equal plane with others.',
+                 'I feel that I have a number of good qualities.',
+                 'All in all, I am inclined to feel that I am a failure.',
+                 'I am able to do things as well as most other people.',
+                 'I feel I do not have much to be proud of.',
+                 'I take a positive attitude toward myself.',
+                 'On the whole, I am satisfied with myself.',
+                 'I wish I could have more respect for myself.',
+                 'I certainly feel useless at times.',
+                 'At times I think I am no good at all.']
+    answers = []
+    answer = ''
+    option = True
+    while option:
+        for question in questions:
+            answer = get_imput(question)
+            if answer == 'Error':
+                print('Data entry error! Please check the data you typed')
+                flag = input('Do you want to quit? Type Y for Yes or everything else for No.')
+                break
+            else:
+                answers.append(answer)
+
+        if flag.lower() == 'y':
+            print('Program end')
+            option = False
+
+
+def get_imput(question):
+    while True:
+        answer = input(question)
+        if answer.strip() in ['D','d', 'a', 'A']:
+            return answer
+        else:
+            return 'Error'
+
+def calculate_steem_messure(answers):
+    for i in range(answers):
+        if i in [1,2,4,6,7]:
+            #Positive questions
+            ...
+        else:
+            #Negative questions
+            ...
