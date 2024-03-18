@@ -51,10 +51,11 @@ def main():
                 break
             else:
                 answers.append(answer)
-
+        print(f'Your score is {calculate_steem_messure(answers)}')
         if flag.lower() == 'y':
             print('Program end')
             option = False
+
 
 
 def get_imput(question):
@@ -66,10 +67,26 @@ def get_imput(question):
             return 'Error'
 
 def calculate_steem_messure(answers):
+    result = 0
     for i in range(answers):
         if i in [1,2,4,6,7]:
             #Positive questions
-            ...
+            if answers[i] == 'D':
+                result += 0
+            elif answers[i] == 'd':
+                result += 1
+            elif answers[i] == 'a':
+                result += 2
+            elif answers[i] == 'A':
+                result += 3
         else:
             #Negative questions
-            ...
+            if answers[i] == 'D':
+                result += 3
+            elif answers[i] == 'd':
+                result += 2
+            elif answers[i] == 'a':
+                result += 1
+            elif answers[i] == 'A':
+                result += 0
+    return result
