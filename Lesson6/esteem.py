@@ -39,19 +39,23 @@ def main():
                  'I wish I could have more respect for myself.',
                  'I certainly feel useless at times.',
                  'At times I think I am no good at all.']
+    print(15 * '_')
     answers = []
     answer = ''
     option = True
+    flag = ''
     while option:
         for question in questions:
             answer = get_imput(question)
             if answer == 'Error':
                 print('Data entry error! Please check the data you typed')
-                flag = input('Do you want to quit? Type Y for Yes or everything else for No.')
                 break
             else:
                 answers.append(answer)
-        print(f'Your score is {calculate_steem_messure(answers)}')
+        if answer != 'Error':
+            print(f'Your score is {calculate_steem_messure(answers)}')
+            print('A score below 15 may indicate problematic low self-esteem.')
+        flag = input('Do you want to quit? Type Y for Yes or everything else for No.')
         if flag.lower() == 'y':
             print('Program end')
             option = False
@@ -68,8 +72,8 @@ def get_imput(question):
 
 def calculate_steem_messure(answers):
     result = 0
-    for i in range(answers):
-        if i in [1,2,4,6,7]:
+    for i in range(len(answers)):
+        if i+1 in [1,2,4,6,7]:
             #Positive questions
             if answers[i] == 'D':
                 result += 0
@@ -90,3 +94,10 @@ def calculate_steem_messure(answers):
             elif answers[i] == 'A':
                 result += 0
     return result
+
+# If this file was executed like this:
+# > python example.py
+# then call the main function. However, if this file
+# was simply imported, then skip the call to main.
+if __name__ == "__main__":
+    main()
