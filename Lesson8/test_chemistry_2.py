@@ -1,6 +1,7 @@
 # Copyright 2020, Brigham Young University-Idaho. All rights reserved.
 
-from chemistry import make_periodic_table, compute_molar_mass
+from chemistry import make_periodic_table,compute_molar_mass
+from chemistry import get_formula_name
 from formula import parse_formula, FormulaError
 from pytest import approx
 import pytest
@@ -10,7 +11,7 @@ import pytest
 # elements in the periodic table.
 NAME_INDEX = 0
 ATOMIC_MASS_INDEX = 1
-
+ATOMIC_NUMBER_INDEX = 2
 
 def test_make_periodic_table():
     """Verify that the make_periodic_table function works correctly.
@@ -152,6 +153,12 @@ def check_element(periodic_table_dict, symbol, expected):
             f"wrong atomic mass for {exp_name}: " \
             f"expected {exp_mass} but found {act_mass}"
 
+    # Verify that the element's atomic number is correct.
+    act_number = actual[ATOMIC_NUMBER_INDEX]
+    exp_number = expected[ATOMIC_NUMBER_INDEX]
+    assert act_number == approx(exp_number), \
+            f"wrong atomic number for {exp_name}: " \
+            f"expected {exp_number} but found {act_number}"
 
 def test_parse_formula():
     """Verify that the parse_formula function works correctly.
