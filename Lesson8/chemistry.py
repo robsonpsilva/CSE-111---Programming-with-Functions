@@ -157,12 +157,18 @@ def sum_protons(symbol_quantity_list, periodic_table_dict):
     Return: the total number of protons of all
         the elements in symbol_quantity_list.
     """
-
-
+    total_protons_sum = 0
+    for sql in symbol_quantity_list:
+        symbol = sql[SYMBOL_INDEX]
+        atoms_quantity = sql[QUANTITY_INDEX]
+        atomic_data = periodic_table_dict[symbol]
+        total_protons_sum += atoms_quantity * atomic_data[ATOMIC_NUMBER_INDEX]
+    return total_protons_sum
 
 # Indexes for inner lists in the periodic table
 NAME_INDEX = 0
 ATOMIC_MASS_INDEX = 1
+ATOMIC_NUMBER_INDEX = 2
 
 # Indexes for inner lists in a symbol_quantity_list
 SYMBOL_INDEX = 0
@@ -216,33 +222,9 @@ def compute_number_of_moles(molecule_mass, sample_mass):
     
 
 def main():
-   # Get a chemical formula for a molecule from the user.
-
-    # Get the mass of a chemical sample in grams from the user.
-
-    # Call the make_periodic_table function and
-    # store the periodic table in a variable.
-
-    # Call the parse_formula function to convert the
-    # chemical formula given by the user to a compound
-    # list that stores element symbols and the quantity
-    # of atoms of each element in the molecule.
-
-    # Call the compute_molar_mass function to compute the
-    # molar mass of the molecule from the compound list.
-
-    # Compute the number of moles in the sample.
-
-    # Print the molar mass.
-
-    # Print the number of moles.
-
+   
     # Get a chemical formula for a molecule from the user.
     formula = input('Enter the molecular formula of the sample:')
-
-    #Exceeding the Requirements
-    formula_name = get_formula_name(formula, get_known_molecules_from_dict())
-    print(formula_name)
 
     # Get the mass of a chemical sample in grams from the user.
     mass_in_grams = float(input('Enter the mass in grams of the sample:'))
@@ -255,6 +237,14 @@ def main():
     # list that stores element symbols and the quantity
     # of atoms of each element in the molecule.
     symbol_quantity_list = parse_formula(formula, periodic_table)
+
+
+    #Exceeding the Requirements
+    formula_name = get_formula_name(formula, get_known_molecules_from_dict())
+    print(formula_name)
+
+    #Exceeding the Requirements
+    print(f'Quantidade de Protons:{sum_protons(symbol_quantity_list, periodic_table)}')
 
     # Call the compute_molar_mass function to compute the
     # molar mass of the molecule from the compound list.
