@@ -1,4 +1,6 @@
 import math
+
+#Program imports datetime
 from datetime import datetime
 
 """
@@ -23,11 +25,16 @@ d is the diameter of the wheel in inches.
 tyres_prices = [[185,65,15, 51.0],[205,60,15, 53.01],[175,70,14,39.12],[195,65,15,82.3], [185,50,14, 100.1]]
 
 try:
+    #Program prompts for three numbers
+    #Program converts all three numbers
     w = int(input('Enter the width of the tire in mm (ex 205): '))
     a =int(input('Enter the aspect ratio of the tire (ex 60): '))
     d = int(input('Enter the diameter of the wheel in inches (ex 15): '))
 
+    
+    #Program calculates the correct tire volume
     v = math.pi * (w ** 2) * a * (w * a + 2540 * d) / 10000000000
+    #Program prints the volume with 0, 1, or 2 digits after the decimal point
     print(f'The approximate volume is {v:.2f} liters')
     
     #Exceeding requirements
@@ -41,8 +48,9 @@ try:
         print('Item not found in price list')
 
     #Opening file volumes.txr for appending text
+    #Program opens the volumes.txt file
     with open('volumes.txt', 'at') as volumes_file: 
-        #Geting current system date
+        #Program gets the current date
         current_date_and_time = datetime.now()
         #Recording the file
         #Exceeding requirements
@@ -50,6 +58,8 @@ try:
         if option.lower() == '1':
             #Exceeding requirements
             phone = input('Please type your phone number ')
+            #Program prints the current date to the volumes.txt file and
+            #Program prints the width, aspect ratio, diameter, and volume to the volumes.txt file
             print(f'{current_date_and_time:%Y-%m-%d}, {w}, {a}, {d}, {v:.2f}, {phone}', file=volumes_file)
         else:
             print(f'{current_date_and_time:%Y-%m-%d}, {w}, {a}, {d}, {v:.2f}', file=volumes_file)
