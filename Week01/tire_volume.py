@@ -34,7 +34,6 @@ try:
     
     #Program calculates the correct tire volume
     v = math.pi * (w ** 2) * a * (w * a + 2540 * d) / 10000000000
-    v = 60.1
     #Program prints the volume with 0, 1, or 2 digits after the decimal point
     print(f'The approximate volume is {round(v,2)} liters')
     
