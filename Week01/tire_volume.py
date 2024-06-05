@@ -15,9 +15,9 @@ d is the diameter of the wheel in inches.
 tyres_prices = [[185,65,15, 51.0],[205,60,15, 53.01],[175,70,14,39.12],[195,65,15,82.3]]
 
 try:
-    w = int(input('Enter the width of the tire in mm (ex 205):'))
-    a =int(input('Enter the aspect ratio of the tire (ex 60):'))
-    d = int(input('Enter the diameter of the wheel in inches (ex 15):'))
+    w = int(input('Enter the width of the tire in mm (ex 205): '))
+    a =int(input('Enter the aspect ratio of the tire (ex 60): '))
+    d = int(input('Enter the diameter of the wheel in inches (ex 15): '))
     current_date_and_time = datetime.now()
 
     v = math.pi * (w ** 2) * a * (w * a + 2540 * d) / 10000000000
@@ -32,7 +32,7 @@ try:
         #Recording the file
         
         #Exceeding requirements
-        option = input('Do you want to buy the tire you informed?: Type 1 for Yes or 2 for No.')
+        option = input('Do you want to buy the tires in the size you indicated?: Type 1 for Yes or 2 for No.')
         if option.lower() == '1':
             phone = input('Please type your phone number')
             print(f'{current_date_and_time:%Y-%m-%d}, {w}, {a}, {d}, {v:.2f}, {phone}', file=volumes_file)
