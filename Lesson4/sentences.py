@@ -150,7 +150,7 @@ def get_prepositional_phrase(quantity):
     noum = get_noun(quantity)
     preposition = get_preposition()
 
-    sentence = preposition + ' ' + determiner + ' ' + noum
+    sentence = preposition + ' ' + determiner +  ' ' + noum 
     return sentence
 
 def make_sentence(quantity, tense):
@@ -164,11 +164,12 @@ def make_sentence(quantity, tense):
     determiner = get_determiner(quantity)
     noum = get_noun(quantity)
     verb = get_verb(quantity, tense)
-    preprositional_phrase = get_prepositional_phrase(quantity) #Exceeding the Requirements
-    preprositional_phrase_1 = get_prepositional_phrase(quantity)
-    adjective = get_adjective()
+    preprositional_phrase = get_prepositional_phrase(quantity) 
+    preprositional_phrase_1 = get_prepositional_phrase(quantity) #Exceeding the Requirements
+    adjective = get_adjective() #Exceeding the Requirements
 
-    sentence = preprositional_phrase + ' '+ determiner + ' ' + adjective + ' '+noum + ' ' + verb + ' ' + preprositional_phrase_1 #Exceeding the Requirements
+    #Exceeding the Requirements
+    sentence = determiner + ' ' + adjective + ' ' + noum + ' ' + preprositional_phrase_1 + ' ' + verb + ' ' + preprositional_phrase
     sentence = sentence.capitalize()
     
     return sentence
