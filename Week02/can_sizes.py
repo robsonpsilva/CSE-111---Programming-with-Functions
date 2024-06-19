@@ -15,7 +15,7 @@ def main():
     print(f'#2.5 {compute_storage_efficiency(10.32, 11.91):.2f}')
 
     #Storage efficiency to can #3 cilinder
-    print(f'#3 {compute_storage_efficiency(10.79, 17.78):.2f}')
+    print(f'#3 Cylinder {compute_storage_efficiency(10.79, 17.78):.2f}')
 
     #Storage efficiency to can #5
     print(f'#5 {compute_storage_efficiency(13.02, 14.29):.2f}')
@@ -54,7 +54,7 @@ def main():
     print(f'#2.5 {compute_cost_efficiency(10.32, 11.91, 0.61):.2f}')
 
     #Cost efficiency to can #3 cilinder
-    print(f'#3 {compute_cost_efficiency(10.79, 17.78, 0.86):.2f}')
+    print(f'#3 Cylinder {compute_cost_efficiency(10.79, 17.78, 0.86):.2f}')
 
     #Cost efficiency to can #5
     print(f'#5 {compute_cost_efficiency(13.02, 14.29, 0.83):.2f}')
