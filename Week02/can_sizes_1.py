@@ -38,7 +38,7 @@ def compute_cost_efficiency(radius, height, cost):
 
 def compute_volume(radius, height):
     """
-    This function computes the volume of a cone
+    This function computes the volume of a can
     They receive two variables, radius and height
     then compute the volume of a cone
     """
