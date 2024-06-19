@@ -1,5 +1,10 @@
 import math
 
+def compute_cost_efficiency(radius, height, cost):
+    volume = compute_volume(radius, height)
+    efficiency = volume/cost
+    return efficiency
+
 def main():
 
     #Storage efficiency to Can #1 Picnic
@@ -77,10 +82,7 @@ def main():
     #Cost efficiency to can #303
     print(f'#303 {compute_cost_efficiency(8.10, 11.11, 0.42):.2f}')
 
-def compute_cost_efficiency(radius, height, cost):
-    volume = compute_volume(radius, height)
-    efficiency = volume/cost
-    return efficiency
+
 
 def compute_volume(radius, height):
     """
