@@ -8,20 +8,29 @@ def main():
                 ['#6Z', 5.40, 8.89, 0.22], ['#8Z short', 6.83, 7.62, 0.26],
                 ['#10', 15.72, 17.78, 1.53], ['#211', 6.83, 12.38, 0.34],
                 ['#300', 7.62, 11.27, 0.38], ['#303', 8.10, 11.11, 0.42]]
-    #printing the storage eficiency
     
+    #printing the storage eficiency
+    print(20 * '_')
+    print('')
     print('Storage efficiency')
-    print(15 * '_')
+    print(20 * '_')
+    print('')
+
     for i in can_data:
         print(f'{i[0]} {compute_storage_efficiency(i[1], i[2]):.2f}')
 
-    print('Cost efficiency')
-    print(15 * '_')
-
     #printing the cost eficiency
+    print(20 * '_')
+    print('')
+    print('Cost efficiency')
+    print(20 * '_')
+    print('')
+   
     for j in can_data:
         print(f'{j[0]} {compute_cost_efficiency(j[1], j[2], j[3]):.2f}')
 
+    print('')
+    
 def compute_cost_efficiency(radius, height, cost):
     volume = compute_volume(radius, height)
     efficiency = volume/cost
@@ -29,7 +38,7 @@ def compute_cost_efficiency(radius, height, cost):
 
 def compute_volume(radius, height):
     """
-    This function computes the volume of a cone
+    This function computes the volume of a can
     They receive two variables, radius and height
     then compute the volume of a cone
     """
