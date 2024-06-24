@@ -16,8 +16,7 @@ def pressure_loss_from_pipe(pipe_diameter,
         pipe_length, friction_factor, fluid_velocity):
     pressure_loss = - friction_factor * pipe_length * WATER_DENSITY * (fluid_velocity ** 2) / (2000 * pipe_diameter)
     return pressure_loss
-def pressure_loss_from_fittings(
-        fluid_velocity, quantity_fittings):
+def pressure_loss_from_fittings(fluid_velocity, quantity_fittings):
     
     pressure_loss = -0.04 * WATER_DENSITY * (fluid_velocity ** 2) * quantity_fittings / 2000
     return pressure_loss
