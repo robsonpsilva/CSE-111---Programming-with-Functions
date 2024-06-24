@@ -1,8 +1,9 @@
 
+#--------------------Exceeding the Requirements--------------------
 EARTH_ACCELERATION_OF_GRAVITY = 9.80665 #Exceeding the Requirements
 WATER_DENSITY = 998.2 #Exceeding the Requirements
 WATER_DYNAMIC_VISCOSITY = 0.0010016 #Exceeding the Requirements
-
+#------------------------------------------------------------------
 
 def water_column_height(tower_height, tank_height):
     height = tower_height + 3 * tank_height / 4
@@ -31,9 +32,12 @@ def pressure_loss_from_pipe_reduction(larger_diameter,
     p = - k * WATER_DENSITY * (fluid_velocity ** 2) / 2000
     return p
 
-def kpa_to_psi(pressure_kpa):
+
+#--------------------Exceeding the Requirements--------------------
+def kpa_to_psi(pressure_kpa): #Exceeding the Requirements
     psi = pressure_kpa / 6.895
     return psi
+#-------------------------------------------------------------------
 
 PVC_SCHED80_INNER_DIAMETER = 0.28687 # (meters)  11.294 inches
 PVC_SCHED80_FRICTION_FACTOR = 0.013  # (unitless)
@@ -75,7 +79,9 @@ def main():
     pressure += loss
 
     print(f"Pressure at house: {pressure:.1f} kilopascals")
-    print(f"Pressure at house: {kpa_to_psi(pressure):.1f} psi")
 
+    #--------------------Exceeding the Requirements--------------------
+    print(f"Pressure at house: {kpa_to_psi(pressure):.1f} psi") #Exceeding the Requirements
+    #-------------------------------------------------------------------
 if __name__ == "__main__":
     main()
