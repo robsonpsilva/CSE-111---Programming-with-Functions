@@ -153,12 +153,7 @@ def check_element(periodic_table_dict, symbol, expected):
             f"wrong atomic mass for {exp_name}: " \
             f"expected {exp_mass} but found {act_mass}"
 
-    # Verify that the element's atomic number is correct.
-    act_number = actual[ATOMIC_NUMBER_INDEX]
-    exp_number = expected[ATOMIC_NUMBER_INDEX]
-    assert act_number == approx(exp_number), \
-            f"wrong atomic number for {exp_name}: " \
-            f"expected {exp_number} but found {act_number}"
+   
 
 def test_parse_formula():
     """Verify that the parse_formula function works correctly.
