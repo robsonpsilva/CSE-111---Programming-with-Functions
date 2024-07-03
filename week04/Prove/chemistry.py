@@ -1,3 +1,9 @@
+'''
+Codes that exceed the requirements are identified 
+with "Exceeding the Requirements" in a nearby comment 
+or on themselves.
+'''
+
 from formula import parse_formula
 
 def get_known_molecules_from_dict():
@@ -142,7 +148,7 @@ def get_formula_name(formula, known_molecules_dict):
         chemical_formula ='Error'
     return chemical_formula
 
-
+#Exceeding the Requirements
 def sum_protons(symbol_quantity_list, periodic_table_dict):
     """Compute and return the total number of protons in
     all the elements listed in symbol_quantity_list.
