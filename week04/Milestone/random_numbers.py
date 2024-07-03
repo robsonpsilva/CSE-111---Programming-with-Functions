@@ -5,6 +5,7 @@ def append_random_numbers(number_list, quantity = 1):
     for i in range(quantity):
         number_list.append(random.uniform(0,100))
     return number_list
+
 def append_random_words(words_list,quantity = 1):
     wordseed = ['car', 'bus', 'stop','feet','house','castle','plain',
                 'orange','mellon', 'beach','boat', 'ship', 'hope']
