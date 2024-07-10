@@ -1,4 +1,9 @@
 #Robson Paulo da Silva
+"""
+The section that corresponds to the "Exceeding Requirements" activity is identified
+in the code as "#Exceeding Requirements Section".
+
+"""
 import csv
 # Import the datetime class from the datetime
 # module so that it can be used in this program.
@@ -46,7 +51,16 @@ def main():
         print(f'Subtotal: {subtotal:.2f}')
 
         #Calculating sales tax
-        sales_tax = subtotal * 0.06
+
+        #Exceding Requirements Section
+        #Getting today weekday
+        day = datetime.today().weekday() 
+        if day in (1,2): 
+            sales_tax = subtotal * 0.1 
+        else: #Exceding requirements
+            sales_tax = subtotal * 0.06 
+        #End of Exceding Requirements section
+
         #Printing Sales Tax
         print(f'Sales Tax: {sales_tax:.2f}')
 
@@ -67,13 +81,15 @@ def main():
 
     #Handling exceptions
     except FileNotFoundError as not_found_err:
+        print('Error: missing file')
         print(not_found_err)
     except PermissionError as perm_err:
         print(perm_err)
     except ValueError as val_err:
         print(val_err)
-    except KeyError as key_error:
-        print(key_error)
+    except KeyError as key_err:
+        print('Error: unknown product ID in the request.csv file')
+        print(key_err)
 
 def read_dictionary(filename, key_column_index):
     """Read the contents of a CSV file into a compound
