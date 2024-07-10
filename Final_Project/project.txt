@@ -1,4 +1,4 @@
-CSE 111 Proposal for a Student Chosen Program
+    CSE 111 Proposal for a Student Chosen Program
 
     (This is a proposal. All proposals are written with our best
     knowledge at the beginning of a project. As we progress from the
