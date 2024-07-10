@@ -27,9 +27,9 @@ def main():
         list = read_list('Week05/Prove/request.csv')
         # Printing the store name
         # 1. Program prints a store name.
-        print(48 * '-')
+        print(54 * '-')
         print(store_name)
-        print(48 * '-')
+        print(54 * '-')
 
         # Printing ordered items'list
         # 2. Program prints requested products.
@@ -49,7 +49,7 @@ def main():
         
         # Printing total of items
         # 3. Program computes and prints the number of items
-        print(48 * '-')
+        print(54 * '-')
         print(f'Number of items: {total_items:.1f}')
 
         #Printing subtotal
@@ -61,7 +61,7 @@ def main():
 
         #Exceding Requirements Section
         # 12.  Creativity.
-        
+
         #Getting today weekday
         day = datetime.today().weekday() 
         if day in (1,2): 
@@ -79,9 +79,9 @@ def main():
 
         # Printing final message
         # 7. Program prints a thank you message.
-        print(48 * '-')
+        print(54 * '-')
         print('Thank you for shopping at the ' + store_name)
-        print(48 * '-')
+        print(54 * '-')
         
         # Call the now() method to get the current
         # date and time as a datetime object from
@@ -92,7 +92,17 @@ def main():
 
         # 8. Program prints the current date and time.
         print(f"{current_date_and_time:%a %b %d %I:%M:%S %Y}")
-        print(48 * '-')
+        print(54 * '-')
+
+        #Exceding Requirements Section
+        # 12.  Creativity.
+        
+        # Write code to print at the bottom of 
+        # the receipt an invitation for the customer 
+        # to complete an online survey.
+        
+        print('We want to hear from you, please fill out our online\nsurvey: http://www.andaraiemporium.com/survey')
+        print(54 * '-')
 
     #Handling exceptions
     except FileNotFoundError as not_found_err:
