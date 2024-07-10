@@ -19,16 +19,20 @@ product_price_index = 2
 store_name = 'Andarai Emporium'
 
 def main():
+    # 11. Program contains an except block to handle FileNotFoundError.
     try:
         # Loading product list
         products_dict = read_dictionary('Week05/Prove/products.csv', key_column_index)
         #Loading client request
         list = read_list('Week05/Prove/request.csv')
         # Printing the store name
-        print(15 * '-')
+        # 1. Program prints a store name.
+        print(48 * '-')
         print(store_name)
-        print(15 * '-')
+        print(48 * '-')
+
         # Printing ordered items'list
+        # 2. Program prints requested products.
         total_items = 0
         subtotal = 0
         sales_tax = 0
@@ -44,15 +48,20 @@ def main():
             subtotal += (float(product_price ) * float(quantity))
         
         # Printing total of items
-        print(15 * '-')
+        # 3. Program computes and prints the number of items
+        print(48 * '-')
         print(f'Number of items: {total_items:.1f}')
 
         #Printing subtotal
+        # 4. Program computes and prints the subtotal
         print(f'Subtotal: {subtotal:.2f}')
 
         #Calculating sales tax
+        #5. Program computes and prints the sales tax.
 
         #Exceding Requirements Section
+        # 12.  Creativity.
+        
         #Getting today weekday
         day = datetime.today().weekday() 
         if day in (1,2): 
@@ -65,11 +74,14 @@ def main():
         print(f'Sales Tax: {sales_tax:.2f}')
 
         #Printing total
+        #6. Program computes and prints the total
         print(f'Total: {subtotal + sales_tax:.2f}')
 
         # Printing final message
+        # 7. Program prints a thank you message.
+        print(48 * '-')
         print('Thank you for shopping at the ' + store_name)
-
+        print(48 * '-')
         
         # Call the now() method to get the current
         # date and time as a datetime object from
@@ -77,7 +89,10 @@ def main():
         current_date_and_time = datetime.now()
         # Use an f-string to print the current
         # day of the week and the current time.
+
+        # 8. Program prints the current date and time.
         print(f"{current_date_and_time:%a %b %d %I:%M:%S %Y}")
+        print(48 * '-')
 
     #Handling exceptions
     except FileNotFoundError as not_found_err:
