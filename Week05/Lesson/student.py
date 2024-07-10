@@ -6,7 +6,7 @@ key_name_index = 1
 def main():
   i_number = input("Type student's I-Number:")
   i_number = i_number.replace('-','')
-  students = read_dictionary('Week05/Milestone/students.csv', key_column_index)
+  students = read_dictionary('Week05/Lesson/students.csv', key_column_index)
   if i_number in students:
     print(students[i_number])
   else:
