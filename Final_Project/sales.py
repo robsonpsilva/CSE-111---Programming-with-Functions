@@ -2,6 +2,10 @@ import csv
 from datetime import datetime
 from tabulate import tabulate
 
+import tkinter as tk
+from tkinter import Frame, Label, Button
+from number_entry import IntEntry
+
 key_column_index = 0
 products = {}
 filename = 'products.csv'
