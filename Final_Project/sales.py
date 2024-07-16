@@ -112,7 +112,7 @@ def show_initial_screen(product_list):
     root.geometry('350x200')
     root.resizable(False, False)
     root.eval('tk::PlaceWindow . center')
-    selected_opt = tk.StringVar()
+    selected_opt = tk.StringVar(value=1)
     label = ttk.Label(text="Choose one of the options below")
     label.pack(fill='x', padx=5, pady=5)
 
@@ -140,9 +140,12 @@ def show_initial_screen(product_list):
     )
     r.pack(fill='x', padx=20, pady=5)
 
-    button = ttk.Button(root, text="Ok", command= lambda:run_opt(selected_opt, root, product_list))
+    button1 = ttk.Button(root, text="Ok", command= lambda:run_opt(selected_opt, root, product_list))
 
-    button.pack(fill='x', padx=5, pady=5)
+    button1.pack(fill='x', padx=5, pady=5)
+
+    button2 = ttk.Button(root, text='Close', command=root.destroy)
+    button2.pack(fill='x', padx=5, pady=5)
 
     root.mainloop()
 
@@ -164,6 +167,8 @@ def show_product_list(product_list, root):
                     
                     self.e.grid(row=i, column=j)
                     self.e.insert(END, product_list[i][j])
+            
+            
     
     # find total number of rows and
     # columns in list
@@ -177,6 +182,7 @@ def show_product_list(product_list, root):
     #Creating product list table
     t = Table(second_win)
 
+    t.
     #Centralizing the window
     root.eval(f'tk::PlaceWindow {str(second_win)} center')
     
