@@ -1,7 +1,7 @@
 # Copyright 2020, Brigham Young University-Idaho. All rights reserved.
 
 import tkinter as tk
-from tkinter import Frame, Label, Button
+from tkinter import *
 from number_entry import IntEntry
 
 

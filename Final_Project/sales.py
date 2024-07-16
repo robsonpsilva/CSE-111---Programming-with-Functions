@@ -1,25 +1,63 @@
 import csv
+import os
+import tkinter as tk
+from tkinter import ttk
+from tkinter import *
 from datetime import datetime
 from tabulate import tabulate
-
-import tkinter as tk
-from tkinter import Frame, Label, Button
-from number_entry import IntEntry
+from tkinter import messagebox
 
 key_column_index = 0
-products = {}
 filename = 'products.csv'
 path = 'Final_Project/'
 
+
+
+
 def main():
-    system_setup()
+    try:
+        #Acquiring product list
+        product_list = []
+        product_dict = system_setup()
+        for pd in product_dict:
+            product_list.append(product_dict[pd])    
+        show_initial_screen(product_list)
+        """
+        os.system('cls' if os.name == 'nt' else 'clear')
+        print('Choose one of the options below:')
+        print('Type 1 to list products and prices')
+        print('Type 2 to include/exclude/update an item in your request')
+        print('Type 3 to include/exclude/update an item in product list')
+        print('Type 0 to exit program')
+        option = input("Type your option:")
+        if option == '1':
+            os.system('cls' if os.name == 'nt' else 'clear')
+            prod_table = set_product_table(product_dict)
+            print(prod_table)
+            input('Press any key to continue.')
+        
+        elif option == '2':
+            ...
+        elif option == '3':
+            ...
+        elif option == '0':
+            break
+        else:
+            os.system('cls' if os.name == 'nt' else 'clear')
+            input('Input error, press any key to continue.')
+        """
+    
+    except FileNotFoundError as not_found_err:
+        print('Error: missing file')
+        print(not_found_err)
+            
 
 #The purpose of this code is load 
 #Initial essential data and configuration
 def system_setup():
     file = path + filename
     products = read_dictionary(file, key_column_index)
-    print(products)
+    return products
 
 def read_dictionary(filename, key_column_index):
     """Read the contents of a CSV file into a compound
@@ -59,6 +97,90 @@ def read_dictionary(filename, key_column_index):
     # Return the dictionary.
     return dictionary
 
+def set_product_table(product_dict):
+    #Formating headers
+    dados = [['Product id','Name','Price']]
+    for i in product_dict:
+        item = product_dict[i]
+        dados.append([i,item[1], item[2]])
+
+    return tabulate(dados,headers='firstrow',tablefmt='grid') 
+
+def show_initial_screen(product_list):
+    
+
+    root = tk.Tk()
+    root.title('Pegasus - Store Front and Stock Management')
+    root.geometry('350x200')
+    root.resizable(False, False)
+    root.eval('tk::PlaceWindow . center')
+    selected_opt = tk.StringVar()
+    label = ttk.Label(text="Choose one of the options below")
+    label.pack(fill='x', padx=5, pady=5)
+
+    r = ttk.Radiobutton(
+        root,
+        text= 'List products and prices',
+        value= 1,
+        variable=selected_opt
+    )
+    r.pack(fill='x', padx=20, pady=5)
+
+    r = ttk.Radiobutton(
+        root,
+        text= 'Include/Exclude/Update an item in your request',
+        value= 2,
+        variable=selected_opt
+    )
+    r.pack(fill='x', padx=20, pady=5)
+
+    r = ttk.Radiobutton(
+        root,
+        text= 'Include/Exclude/Update an item in your product list',
+        value= 3,
+        variable=selected_opt
+    )
+    r.pack(fill='x', padx=20, pady=5)
+
+    button = ttk.Button(root, text="Ok", command= lambda:run_opt(selected_opt, root, product_list))
+
+    button.pack(fill='x', padx=5, pady=5)
+
+    root.mainloop()
+
+def run_opt(opt, root, product_list):
+    print(opt.get())
+    if opt.get() == '1':
+        show_product_list(product_list, root)
+    
+
+def show_product_list(product_list, root):
+    class Table:
+        def __init__(self,root):
+            
+            # code for creating table
+            for i in range(total_rows):
+                for j in range(total_columns):
+                    
+                    self.e = Entry(root, width=20, fg='blue',
+                                font=('Arial',16,'bold'))
+                    
+                    self.e.grid(row=i, column=j)
+                    self.e.insert(END, product_list[i][j])
+    
+    # find total number of rows and
+    # columns in list
+    total_rows = len(product_list)
+    total_columns = len(product_list[0])
+
+    #Creating product list table
+    # create root window
+    second_win = tk.Toplevel(root)
+    label = t   k.Label(text="Product List")
+    label.pack(fill='x', padx=5, pady=5)
+    t = Table(second_win)
+    
+    
 
 # Call main to start this program.
 if __name__ == "__main__":
