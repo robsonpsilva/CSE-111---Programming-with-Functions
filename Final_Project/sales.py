@@ -107,8 +107,6 @@ def set_product_table(product_dict):
     return tabulate(dados,headers='firstrow',tablefmt='grid') 
 
 def show_initial_screen(product_list):
-    
-
     root = tk.Tk()
     root.title('Pegasus - Store Front and Stock Management')
     root.geometry('350x200')
@@ -153,11 +151,10 @@ def run_opt(opt, root, product_list):
     if opt.get() == '1':
         show_product_list(product_list, root)
     
-
 def show_product_list(product_list, root):
     class Table:
         def __init__(self,root):
-            
+             
             # code for creating table
             for i in range(total_rows):
                 for j in range(total_columns):
@@ -173,12 +170,15 @@ def show_product_list(product_list, root):
     total_rows = len(product_list)
     total_columns = len(product_list[0])
 
-    #Creating product list table
-    # create root window
+    
+    # Ceeating second window
     second_win = tk.Toplevel(root)
-    label = t   k.Label(text="Product List")
-    label.pack(fill='x', padx=5, pady=5)
+
+    #Creating product list table
     t = Table(second_win)
+
+    #Centralizing the window
+    root.eval(f'tk::PlaceWindow {str(second_win)} center')
     
     
 
