@@ -10,6 +10,9 @@ key_column_index = 0
 filename = 'products.csv'
 path = 'Final_Project/'
 
+global root
+global second_win
+global w1
 
 def main():
     try:
@@ -76,6 +79,7 @@ def show_initial_screen(product_list):
     
     #This function is responsible to mount the initial screen
     
+    
     root = tk.Tk()
     root.title('Pegasus - Store Front and Stock Management')
     root.geometry('350x200')
@@ -115,7 +119,10 @@ def show_initial_screen(product_list):
 
 def run_opt(opt, root, product_list):
     if opt.get() == '1':
+        root.withdraw()
         show_product_list(product_list, root)
+        root.deiconify()
+        
     elif opt.get() == '2':
         ...
     
@@ -157,7 +164,7 @@ def show_product_list(product_list, root):
     #Creating and populating product list table
     t = Table(frame1)
 
-    bt_ins_product_list = ttk.Button(frame2, text='Insert', width = 20, command= lambda:ins_new_product(root))
+    bt_ins_product_list = ttk.Button(frame2, text='Insert', width = 20, command=ins_new_product)
     bt_alt_product_list = ttk.Button(frame2, text='Update', width =  20)
     bt_del_product_list = ttk.Button(frame2, text='Delete', width = 20)
 
@@ -175,15 +182,16 @@ def show_product_list(product_list, root):
     #Centralizing the window
     root.eval(f'tk::PlaceWindow {str(second_win)} center')
 
-def ins_new_product(root):
-    ...
+def ins_new_product():
+    create_product_crud_window()
 
-def create_product_crud_window(root):
+def create_product_crud_window():
+    # Creating second window
     w1 = tk.Tk()
-    w1.title('Pegasus - Store Front and Stock Management')
-    root.eval('tk::PlaceWindow . center')
+    w1.title('Pegasus - Product list management')
+    w1.eval('tk::PlaceWindow . center')
 
-    
+
 # Call main to start this program.
 if __name__ == "__main__":
     main()
