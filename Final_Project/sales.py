@@ -112,7 +112,10 @@ def show_initial_screen(product_list):
     root.geometry('350x200')
     root.resizable(False, False)
     root.eval('tk::PlaceWindow . center')
+
+
     selected_opt = tk.StringVar(value=1)
+
     label = ttk.Label(text="Choose one of the options below")
     label.pack(fill='x', padx=5, pady=5)
 
@@ -179,13 +182,38 @@ def show_product_list(product_list, root):
     # Ceeating second window
     second_win = tk.Toplevel(root)
 
-    #Creating product list table
-    t = Table(second_win)
+    frame1 = Frame(second_win)
+    frame1.pack(pady=5, padx=10)
 
-    t.
+    frame2 = Frame(second_win)
+    frame2.pack(pady=5)
+
+    frame3 = Frame(second_win)
+    frame3.pack(pady=5)
+
+    #Creating product list table
+    t = Table(frame1)
+
+    #Creating Crud interface
+
+    bt_ins_product_list = ttk.Button(frame2, text='Insert', width = 20)
+    bt_alt_product_list = ttk.Button(frame2, text='Update', width =  20)
+    bt_del_product_list = ttk.Button(frame2, text='Delete', width = 20)
+
+          
+    #Creating an exit button
+    bt_exit = ttk.Button(frame3, text='Close', width= 67, command=second_win.destroy)
+       
+    bt_ins_product_list.pack(side='left', padx=5)
+    bt_alt_product_list.pack(side='left', padx = 5)
+    bt_del_product_list.pack(side='left', padx = 5)
+   
+    bt_exit.pack(side='right', padx = 10)
+ 
+
     #Centralizing the window
     root.eval(f'tk::PlaceWindow {str(second_win)} center')
-    
+
     
 
 # Call main to start this program.
