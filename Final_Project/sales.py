@@ -11,11 +11,24 @@ filename = 'products.csv'
 path = 'Final_Project/'
 
 global root
-global second_win
-global w1
+global crud_win
+global insert_product_window 
 
+#Creating main window
 root = tk.Tk()
-second_win = tk.Toplevel(root)
+root.title('Pegasus - Store Front and Stock Management')
+root.geometry('350x200')
+root.resizable(False, False)
+root.eval('tk::PlaceWindow . center')
+
+
+
+# Creating insert product window
+insert_product_window = tk.Toplevel(root)
+insert_product_window.title('Pegasus - Product list management')
+root.eval(f'tk::PlaceWindow {str(insert_product_window)} center')
+# hiding insert product window
+insert_product_window.withdraw()
 
 def main():
     try:
@@ -81,15 +94,6 @@ def read_dictionary(filename, key_column_index):
 def show_initial_screen(product_list):
     
     #This function is responsible to mount the initial screen
-    
-    
-    
-    root.title('Pegasus - Store Front and Stock Management')
-    root.geometry('350x200')
-    root.resizable(False, False)
-    root.eval('tk::PlaceWindow . center')
-
-
     selected_opt = tk.StringVar(value=1)
 
     label = ttk.Label(text="Choose one of the options below")
@@ -143,21 +147,25 @@ def show_product_list(product_list):
                     self.e.grid(row=i, column=j)
                     self.e.insert(END, product_list[i][j])
             
-  
-    
+    #creating product crud window
+    crud_win = tk.Toplevel(root)
+
     # find total number of rows and
     # columns in list
     total_rows = len(product_list)
     total_columns = len(product_list[0])
 
-    frame1 = Frame(second_win)
+    
+    
+    frame1 = Frame(crud_win)
     frame1.pack(pady=5, padx=10)
 
-    frame2 = Frame(second_win)
+    frame2 = Frame(crud_win)
     frame2.pack(pady=5)
 
-    frame3 = Frame(second_win)
+    frame3 = Frame(crud_win)
     frame3.pack(pady=5)
+
 
     #Creating and populating product list table
     t = Table(frame1)
@@ -168,19 +176,18 @@ def show_product_list(product_list):
 
           
     #Creating an exit button
-    bt_exit = ttk.Button(frame3, text='Close', width= 67, command=second_win_exit)
+    bt_exit = ttk.Button(frame3, text='Close', width= 67, command=crud_win_exit)
        
     bt_ins_product_list.pack(side='left', padx=5)
     bt_alt_product_list.pack(side='left', padx = 5)
     bt_del_product_list.pack(side='left', padx = 5)
    
     bt_exit.pack(side='right', padx = 10)
- 
-
     #Centralizing the window
-    root.eval(f'tk::PlaceWindow {str(second_win)} center')
-def second_win_exit():
-    second_win.destroy()
+    root.eval(f'tk::PlaceWindow {str(crud_win)} center')
+
+def crud_win_exit():
+    crud_win.destroy()
     root.deiconify()
 
 
@@ -188,11 +195,7 @@ def ins_new_product():
     create_product_crud_window()
 
 def create_product_crud_window():
-    # Creating second window
-    w1 = tk.Tk()
-    w1.title('Pegasus - Product list management')
-    w1.eval('tk::PlaceWindow . center')
-
+    ...
 
 # Call main to start this program.
 if __name__ == "__main__":
