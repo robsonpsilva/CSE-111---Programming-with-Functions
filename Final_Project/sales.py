@@ -15,6 +15,7 @@ global second_win
 global w1
 
 root = tk.Tk()
+second_win = tk.Toplevel(root)
 
 def main():
     try:
@@ -110,7 +111,7 @@ def show_initial_screen(product_list):
     )
     r.pack(fill='x', padx=20, pady=5)
 
-    button1 = ttk.Button(root, text="Ok", command= lambda:run_opt(selected_opt, root, product_list))
+    button1 = ttk.Button(root, text="Ok", command= lambda:run_opt(selected_opt, product_list))
 
     button1.pack(fill='x', padx=5, pady=5)
 
@@ -119,14 +120,15 @@ def show_initial_screen(product_list):
 
     root.mainloop()
 
-def run_opt(opt, root, product_list):
+def run_opt(opt, product_list):
     if opt.get() == '1':
-        show_product_list(product_list, root)
+        root.withdraw()
+        show_product_list(product_list)
 
     elif opt.get() == '2':
         ...
-    
-def show_product_list(product_list, root):
+
+def show_product_list(product_list):
     #This screen show the product screen
     class Table:
         def __init__(self,root):
@@ -148,10 +150,6 @@ def show_product_list(product_list, root):
     total_rows = len(product_list)
     total_columns = len(product_list[0])
 
-    
-    # Ceeating second window
-    second_win = tk.Toplevel(root)
-
     frame1 = Frame(second_win)
     frame1.pack(pady=5, padx=10)
 
@@ -170,7 +168,7 @@ def show_product_list(product_list, root):
 
           
     #Creating an exit button
-    bt_exit = ttk.Button(frame3, text='Close', width= 67, command=second_win.destroy)
+    bt_exit = ttk.Button(frame3, text='Close', width= 67, command=second_win_exit)
        
     bt_ins_product_list.pack(side='left', padx=5)
     bt_alt_product_list.pack(side='left', padx = 5)
@@ -181,6 +179,10 @@ def show_product_list(product_list, root):
 
     #Centralizing the window
     root.eval(f'tk::PlaceWindow {str(second_win)} center')
+def second_win_exit():
+    second_win.destroy()
+    root.deiconify()
+
 
 def ins_new_product():
     create_product_crud_window()
