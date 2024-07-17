@@ -14,6 +14,8 @@ global root
 global second_win
 global w1
 
+root = tk.Tk()
+
 def main():
     try:
         #Acquiring product list
@@ -80,7 +82,7 @@ def show_initial_screen(product_list):
     #This function is responsible to mount the initial screen
     
     
-    root = tk.Tk()
+    
     root.title('Pegasus - Store Front and Stock Management')
     root.geometry('350x200')
     root.resizable(False, False)
@@ -119,10 +121,8 @@ def show_initial_screen(product_list):
 
 def run_opt(opt, root, product_list):
     if opt.get() == '1':
-        root.withdraw()
         show_product_list(product_list, root)
-        root.deiconify()
-        
+
     elif opt.get() == '2':
         ...
     
