@@ -71,11 +71,16 @@ def read_dictionary(filename, key_column_index):
     # Return the dictionary.
     return dictionary
 
+def set_product_table(product_dict):
+    #Formating headers
+    dados = [['Product id','Name','Price']]
+    for i in product_dict:
+        item = product_dict[i]
+        dados.append([i,item[1], item[2]])
+
+    return tabulate(dados,headers='firstrow',tablefmt='grid') 
 
 def show_initial_screen(product_list):
-    
-    #This function is responsible to mount the initial screen
-    
     root = tk.Tk()
     root.title('Pegasus - Store Front and Stock Management')
     root.geometry('350x200')
@@ -90,7 +95,7 @@ def show_initial_screen(product_list):
 
     r = ttk.Radiobutton(
         root,
-        text= 'List products, Include/Exclude/Update an item in your product list',
+        text= 'List products and prices',
         value= 1,
         variable=selected_opt
     )
@@ -100,6 +105,14 @@ def show_initial_screen(product_list):
         root,
         text= 'Include/Exclude/Update an item in your request',
         value= 2,
+        variable=selected_opt
+    )
+    r.pack(fill='x', padx=20, pady=5)
+
+    r = ttk.Radiobutton(
+        root,
+        text= 'Include/Exclude/Update an item in your product list',
+        value= 3,
         variable=selected_opt
     )
     r.pack(fill='x', padx=20, pady=5)
@@ -114,13 +127,11 @@ def show_initial_screen(product_list):
     root.mainloop()
 
 def run_opt(opt, root, product_list):
+    print(opt.get())
     if opt.get() == '1':
         show_product_list(product_list, root)
-    elif opt.get() == '2':
-        ...
     
 def show_product_list(product_list, root):
-    #This screen show the product screen
     class Table:
         def __init__(self,root):
              
@@ -134,7 +145,7 @@ def show_product_list(product_list, root):
                     self.e.grid(row=i, column=j)
                     self.e.insert(END, product_list[i][j])
             
-  
+            
     
     # find total number of rows and
     # columns in list
@@ -154,8 +165,10 @@ def show_product_list(product_list, root):
     frame3 = Frame(second_win)
     frame3.pack(pady=5)
 
-    #Creating and populating product list table
+    #Creating product list table
     t = Table(frame1)
+
+    #Creating Crud interface
 
     bt_ins_product_list = ttk.Button(frame2, text='Insert', width = 20)
     bt_alt_product_list = ttk.Button(frame2, text='Update', width =  20)
