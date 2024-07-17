@@ -157,7 +157,7 @@ def show_product_list(product_list, root):
     #Creating and populating product list table
     t = Table(frame1)
 
-    bt_ins_product_list = ttk.Button(frame2, text='Insert', width = 20)
+    bt_ins_product_list = ttk.Button(frame2, text='Insert', width = 20, command= lambda:ins_new_product(root))
     bt_alt_product_list = ttk.Button(frame2, text='Update', width =  20)
     bt_del_product_list = ttk.Button(frame2, text='Delete', width = 20)
 
@@ -175,8 +175,15 @@ def show_product_list(product_list, root):
     #Centralizing the window
     root.eval(f'tk::PlaceWindow {str(second_win)} center')
 
-    
+def ins_new_product(root):
+    ...
 
+def create_product_crud_window(root):
+    w1 = tk.Tk()
+    w1.title('Pegasus - Store Front and Stock Management')
+    root.eval('tk::PlaceWindow . center')
+
+    
 # Call main to start this program.
 if __name__ == "__main__":
     main()
