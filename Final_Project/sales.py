@@ -23,13 +23,6 @@ root.eval('tk::PlaceWindow . center')
 
 
 
-# Creating insert product window
-insert_product_window = tk.Toplevel(root)
-insert_product_window.title('Pegasus - Product list management')
-root.eval(f'tk::PlaceWindow {str(insert_product_window)} center')
-# hiding insert product window
-insert_product_window.withdraw()
-
 def main():
     try:
         #Acquiring product list
@@ -150,6 +143,7 @@ def show_product_list(product_list):
     #creating product crud window
     crud_win = tk.Toplevel(root)
 
+
     # find total number of rows and
     # columns in list
     total_rows = len(product_list)
@@ -176,7 +170,7 @@ def show_product_list(product_list):
 
           
     #Creating an exit button
-    bt_exit = ttk.Button(frame3, text='Close', width= 67, command=crud_win_exit)
+    bt_exit = ttk.Button(frame3, text='Close', width= 67, command= lambda:crud_win_exit(crud_win))
        
     bt_ins_product_list.pack(side='left', padx=5)
     bt_alt_product_list.pack(side='left', padx = 5)
@@ -186,16 +180,49 @@ def show_product_list(product_list):
     #Centralizing the window
     root.eval(f'tk::PlaceWindow {str(crud_win)} center')
 
-def crud_win_exit():
-    crud_win.destroy()
+def crud_win_exit(w1):
+    w1.destroy()
     root.deiconify()
 
 
-def ins_new_product():
-    create_product_crud_window()
+def ins_new_product(): 
+    # Creating insert product window
+    insert_product_window = tk.Toplevel(root)
+    insert_product_window.title('Pegasus - Product list management')
+ 
+    lb1 = ttk.Label(insert_product_window, text="Product ID:")
+    lb1.grid(row=0, column=0, sticky=tk.E, padx=5, pady=5)
 
-def create_product_crud_window():
-    ...
+    product_id_entry = ttk.Entry(insert_product_window, width = 20)
+    product_id_entry.grid(row=0, column=1, sticky=tk.W, padx=5, pady=5)
+
+    lb2 = ttk.Label(insert_product_window, text="Product name:")
+    lb2.grid(row=1, column=0, sticky=tk.E, padx=5, pady=5)
+
+    product_name_entry = ttk.Entry(insert_product_window, width = 50)
+    product_name_entry.grid(row=1, column=1, sticky=tk.W, padx=5, pady=5, columnspan=5)
+
+    lb3 = ttk.Label(insert_product_window, text="Quantity:")
+    lb3.grid(row=2, column=0, sticky=tk.E, padx=5, pady=5)
+
+    product_qtd_entry = ttk.Entry(insert_product_window, width = 20)
+    product_qtd_entry.grid(row=2, column=1, sticky=tk.W, padx=5, pady=5)
+    
+
+    btn_close_prod = ttk.Button(insert_product_window, text='Close', width = 20, command = insert_product_window.destroy)
+    btn_close_prod.grid(row=4, column=1, sticky=tk.W, padx=5, pady=5)
+
+    btn_save_prod = ttk.Button(insert_product_window, text='Save', width = 20, command= lambda:save_new_product(product_id_entry.get(),product_name_entry.get(), product_qtd_entry.get()))
+    btn_save_prod.grid(row=4, column=2, sticky=tk.W, padx=5, pady=5)
+
+    root.eval(f'tk::PlaceWindow {str(insert_product_window)} center')
+
+def save_new_product(id,name,qtd):
+    try:
+        quantity = float(qtd)
+    except ValueError as val_err:
+        messagebox.showerror('Pegasus', f'Invalid quantity: {qtd}')
+ 
 
 # Call main to start this program.
 if __name__ == "__main__":
