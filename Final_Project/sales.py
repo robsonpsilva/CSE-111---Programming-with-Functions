@@ -246,7 +246,7 @@ def save_dictionary_in_file(filename,dict):
     with open(filename, "w") as csv_file:
         for i in dict:
             l = dict[i]
-            csv_file.write(f'{l[0]},{l[1]},{l[2]},\n')
+            csv_file.write(f'{l[0]},{l[1]},{l[2]}\n')
 
 def save_new_product(product_dict, id,name,qtd):
     try:
@@ -261,8 +261,11 @@ def save_new_product(product_dict, id,name,qtd):
             #Save new product in file
             file = path + filename
             save_dictionary_in_file(file,product_dict)
+            messagebox.showinfo('Pegasus', 'Data saved successfully')
     except ValueError as val_err:
         messagebox.showerror('Pegasus', f'Invalid quantity: {qtd}')
+    except FileNotFoundError as file_err:
+        messagebox.showerror(f'File {file} not found')
 
 #Functions section end----------------------------------------------------------- 
 
