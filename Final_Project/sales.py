@@ -146,7 +146,8 @@ def crud_win_exit(w1):
     root.deiconify()
 
 
-def ins_new_product(product_dict): 
+def ins_new_product(crud_win, product_dict): 
+    crud_win.destroy()
     # Creating insert product window
     insert_product_window = tk.Toplevel(root)
     insert_product_window.title('Pegasus - Product list management')
@@ -170,13 +171,18 @@ def ins_new_product(product_dict):
     product_qtd_entry.grid(row=2, column=1, sticky=tk.W, padx=5, pady=5)
     
 
-    btn_close_prod = ttk.Button(insert_product_window, text='Close', width = 20, command = insert_product_window.destroy)
+    btn_close_prod = ttk.Button(insert_product_window, text='Close', width = 20, command = lambda:insert_product_exit(insert_product_window, crud_win,product_dict))
     btn_close_prod.grid(row=4, column=1, sticky=tk.W, padx=5, pady=5)
 
     btn_save_prod = ttk.Button(insert_product_window, text='Save', width = 20, command= lambda:save_new_product(product_dict, product_id_entry.get(),product_name_entry.get(), product_qtd_entry.get()))
     btn_save_prod.grid(row=4, column=2, sticky=tk.W, padx=5, pady=5)
 
     root.eval(f'tk::PlaceWindow {str(insert_product_window)} center')
+
+def insert_product_exit(insert_product_window, crud_win, product_dict):
+    insert_product_window.destroy()
+    show_product_list(product_dict)
+
 #GUI section end ------------------------------------------------------------------
 
 
