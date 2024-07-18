@@ -125,7 +125,7 @@ def show_product_list(product_dict):
     #Creating and populating product list table
     t = Table(frame1)
 
-    bt_ins_product_list = ttk.Button(frame2, text='Insert', width = 20, command=ins_new_product)
+    bt_ins_product_list = ttk.Button(frame2, text='Insert', width = 20, command= lambda:ins_new_product(crud_win, product_dict))
     bt_alt_product_list = ttk.Button(frame2, text='Update', width =  20)
     bt_del_product_list = ttk.Button(frame2, text='Delete', width = 20)
 
@@ -146,7 +146,7 @@ def crud_win_exit(w1):
     root.deiconify()
 
 
-def ins_new_product(): 
+def ins_new_product(product_dict): 
     # Creating insert product window
     insert_product_window = tk.Toplevel(root)
     insert_product_window.title('Pegasus - Product list management')
@@ -173,7 +173,7 @@ def ins_new_product():
     btn_close_prod = ttk.Button(insert_product_window, text='Close', width = 20, command = insert_product_window.destroy)
     btn_close_prod.grid(row=4, column=1, sticky=tk.W, padx=5, pady=5)
 
-    btn_save_prod = ttk.Button(insert_product_window, text='Save', width = 20, command= lambda:save_new_product(product_id_entry.get(),product_name_entry.get(), product_qtd_entry.get()))
+    btn_save_prod = ttk.Button(insert_product_window, text='Save', width = 20, command= lambda:save_new_product(product_dict, product_id_entry.get(),product_name_entry.get(), product_qtd_entry.get()))
     btn_save_prod.grid(row=4, column=2, sticky=tk.W, padx=5, pady=5)
 
     root.eval(f'tk::PlaceWindow {str(insert_product_window)} center')
@@ -234,11 +234,19 @@ def read_dictionary(filename, key_column_index):
     # Return the dictionary.
     return dictionary
 
-def save_new_product(id,name,qtd):
+def save_new_product(product_dict, id,name,qtd):
     try:
-        quantity = float(qtd)
+        if id in product_dict:
+            messagebox.showwarning('Pegasus', f'Product ID {id} already exists')
+        else:
+            quantity = float(qtd)
+            #creating a product list structure
+            l = [id,name,qtd]
+            #Store the new product in list
+            product_dict[id] = l
     except ValueError as val_err:
         messagebox.showerror('Pegasus', f'Invalid quantity: {qtd}')
+
 #Functions section end----------------------------------------------------------- 
 
 # Call main to start this program.
