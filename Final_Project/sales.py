@@ -180,7 +180,10 @@ def ins_new_product(crud_win, product_dict):
     root.eval(f'tk::PlaceWindow {str(insert_product_window)} center')
 
 def insert_product_exit(insert_product_window, crud_win, product_dict):
+    #Destroy current window
     insert_product_window.destroy()
+
+    #Show product list and crud window
     show_product_list(product_dict)
 
 #GUI section end ------------------------------------------------------------------
@@ -199,10 +202,10 @@ Such as reading and saving products in the system product list.
 def system_setup():
     #Loading product list
     file = path + filename
-    products = read_dictionary(file, key_column_index)
+    products = read_dictionary_from_file(file, key_column_index)
     return products
 
-def read_dictionary(filename, key_column_index):
+def read_dictionary_from_file(filename, key_column_index):
     """Read the contents of a CSV file into a compound
     dictionary and return the dictionary.
     Parameters
@@ -239,6 +242,11 @@ def read_dictionary(filename, key_column_index):
                 dictionary[key] = row_list
     # Return the dictionary.
     return dictionary
+def save_dictionary_in_file(filename,dict):
+    with open(filename, "w") as csv_file:
+        for i in dict:
+            l = dict[i]
+            csv_file.write(f'{l[0]},{l[1]},{l[2]},\n')
 
 def save_new_product(product_dict, id,name,qtd):
     try:
@@ -250,6 +258,9 @@ def save_new_product(product_dict, id,name,qtd):
             l = [id,name,qtd]
             #Store the new product in list
             product_dict[id] = l
+            #Save new product in file
+            file = path + filename
+            save_dictionary_in_file(file,product_dict)
     except ValueError as val_err:
         messagebox.showerror('Pegasus', f'Invalid quantity: {qtd}')
 
