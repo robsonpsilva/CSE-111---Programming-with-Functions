@@ -126,7 +126,7 @@ def show_product_list(product_dict):
     t = Table(frame1)
 
     bt_ins_product_list = ttk.Button(frame2, text='Insert', width = 20, command= lambda:ins_new_product(crud_win, product_dict))
-    bt_alt_product_list = ttk.Button(frame2, text='Update', width =  20)
+    bt_alt_product_list = ttk.Button(frame2, text='Update', width =  20, command= lambda:alt_product(crud_win,product_dict))
     bt_del_product_list = ttk.Button(frame2, text='Delete', width = 20)
 
           
@@ -155,37 +155,98 @@ def ins_new_product(crud_win, product_dict):
     lb1 = ttk.Label(insert_product_window, text="Product ID:")
     lb1.grid(row=0, column=0, sticky=tk.E, padx=5, pady=5)
 
+    global product_id_entry
     product_id_entry = ttk.Entry(insert_product_window, width = 20)
     product_id_entry.grid(row=0, column=1, sticky=tk.W, padx=5, pady=5)
 
     lb2 = ttk.Label(insert_product_window, text="Product name:")
     lb2.grid(row=1, column=0, sticky=tk.E, padx=5, pady=5)
 
+    global product_name_entry
     product_name_entry = ttk.Entry(insert_product_window, width = 50)
     product_name_entry.grid(row=1, column=1, sticky=tk.W, padx=5, pady=5, columnspan=5)
 
     lb3 = ttk.Label(insert_product_window, text="Quantity:")
     lb3.grid(row=2, column=0, sticky=tk.E, padx=5, pady=5)
 
+    global product_qtd_entry
     product_qtd_entry = ttk.Entry(insert_product_window, width = 20)
     product_qtd_entry.grid(row=2, column=1, sticky=tk.W, padx=5, pady=5)
     
-
-    btn_close_prod = ttk.Button(insert_product_window, text='Close', width = 20, command = lambda:insert_product_exit(insert_product_window, crud_win,product_dict))
+    btn_close_prod = ttk.Button(insert_product_window, text='Close', width = 20, command = lambda:exit(insert_product_window,product_dict))
     btn_close_prod.grid(row=4, column=1, sticky=tk.W, padx=5, pady=5)
 
     btn_save_prod = ttk.Button(insert_product_window, text='Save', width = 20, command= lambda:save_new_product(product_dict, product_id_entry.get(),product_name_entry.get(), product_qtd_entry.get()))
     btn_save_prod.grid(row=4, column=2, sticky=tk.W, padx=5, pady=5)
 
+    
     root.eval(f'tk::PlaceWindow {str(insert_product_window)} center')
 
-def insert_product_exit(insert_product_window, crud_win, product_dict):
-    #Destroy current window
-    insert_product_window.destroy()
 
+def exit(win, product_dict):
+    #Destroy current window
+    win.destroy()
     #Show product list and crud window
     show_product_list(product_dict)
 
+def messagebox_manager(code, msg):
+    # code = 0 product already exists
+    if code == 0:
+        messagebox.showwarning('Pegasus', msg)
+    elif code == 1:
+    # code = 1 product saved with success
+        messagebox.showinfo('Pegasus', msg)
+    elif code == 2:
+    # code = 2 error
+        messagebox.showerror('Pegasus', msg)
+    # After message return focus to product_id_entry
+    product_id_entry.focus()
+
+def insert_product_clear():
+    #Cleaning product id entry
+    product_id_entry.delete(0,tk.END)
+    #Cleaning product name entry
+    product_name_entry.delete(0,tk.END)
+    #Cleaning product quantity entry
+    product_qtd_entry.delete(0, tk.END)
+    
+def alt_product(crud_win,product_dict):
+    crud_win.destroy()
+    # Creating insert product window
+    alt_product_window = tk.Toplevel(root)
+    alt_product_window.title('Pegasus - Product list management')
+ 
+    lb1 = ttk.Label(alt_product_window, text="Product ID:")
+    lb1.grid(row=0, column=0, sticky=tk.E, padx=5, pady=5)
+
+    global product_id_entry
+    product_id_entry = ttk.Entry(alt_product_window, width = 20)
+    product_id_entry.grid(row=0, column=1, sticky=tk.W, padx=5, pady=5)
+
+    lb2 = ttk.Label(alt_product_window, text="Product name:")
+    lb2.grid(row=1, column=0, sticky=tk.E, padx=5, pady=5)
+
+    global product_name_entry
+    product_name_entry = ttk.Entry(alt_product_window, width = 50)
+    product_name_entry.grid(row=1, column=1, sticky=tk.W, padx=5, pady=5, columnspan=5)
+
+    lb3 = ttk.Label(alt_product_window, text="Quantity:")
+    lb3.grid(row=2, column=0, sticky=tk.E, padx=5, pady=5)
+
+    global product_qtd_entry
+    product_qtd_entry = ttk.Entry(alt_product_window, width = 20)
+    product_qtd_entry.grid(row=2, column=1, sticky=tk.W, padx=5, pady=5)
+    
+    btn_close_prod = ttk.Button(alt_product_window, text='Close', width = 20, command = lambda:exit(alt_product_window, crud_win,product_dict))
+    btn_close_prod.grid(row=4, column=1, sticky=tk.W, padx=5, pady=5)
+
+    btn_save_prod = ttk.Button(alt_product_window, text='Save', width = 20, command= lambda:save_alt_product(product_dict, product_id_entry.get(),product_name_entry.get(), product_qtd_entry.get()))
+    btn_save_prod.grid(row=4, column=2, sticky=tk.W, padx=5, pady=5)
+
+    
+    root.eval(f'tk::PlaceWindow {str(alt_product_window)} center')
+    
+    
 #GUI section end ------------------------------------------------------------------
 
 
@@ -251,7 +312,8 @@ def save_dictionary_in_file(filename,dict):
 def save_new_product(product_dict, id,name,qtd):
     try:
         if id in product_dict:
-            messagebox.showwarning('Pegasus', f'Product ID {id} already exists')
+            code = 0
+            msg = f'Product ID {id} already exists'
         else:
             quantity = float(qtd)
             #creating a product list structure
@@ -261,11 +323,43 @@ def save_new_product(product_dict, id,name,qtd):
             #Save new product in file
             file = path + filename
             save_dictionary_in_file(file,product_dict)
-            messagebox.showinfo('Pegasus', 'Data saved successfully')
+            code = 1
+            msg = 'Data saved successfully'
+            insert_product_clear()
     except ValueError as val_err:
-        messagebox.showerror('Pegasus', f'Invalid quantity: {qtd}')
+        code = 2
+        msg = f'Invalid quantity: {qtd}'
     except FileNotFoundError as file_err:
-        messagebox.showerror(f'File {file} not found')
+        code = 2
+        msg = f'File {file} not found'
+    finally:
+        messagebox_manager(code,msg)
+        
+def save_alt_product(product_dict, id,name,qtd):
+    try:
+        if id in product_dict:
+            quantity = float(qtd)
+            #creating a product list structure
+            l = [id,name,qtd]
+            #Store the product in list
+            product_dict[id] = l
+             #Save new product in file
+            file = path + filename
+            save_dictionary_in_file(file,product_dict)
+            code = 1
+            msg = 'Data saved successfully'
+        else:
+            code = 0
+            msg = f"Product ID {id} doesn't exists"
+    
+    except ValueError as val_err:
+        code = 2
+        msg = f'Invalid quantity: {qtd}'
+    except FileNotFoundError as file_err:
+        code = 2
+        msg = f'File {file} not found'
+    finally:
+        messagebox_manager(code,msg)
 
 #Functions section end----------------------------------------------------------- 
 
