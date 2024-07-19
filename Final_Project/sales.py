@@ -27,11 +27,7 @@ def main():
         print(not_found_err)
             
 
-#GUI section begin ------------------------------------------------------------------
-"""
-The responsibility of this section of code is to create and manipulate the system GUI.
-
-"""
+#Creating main window
 
 def show_main_window(product_dict):
     
@@ -82,6 +78,11 @@ def run_opt(opt, product_dict):
     elif opt.get() == '2':
         ...
 
+#Product Management Section Begin ------------------------------------------------
+"""
+This section contains the graphical interface and functions that manage inventory
+
+"""
 def show_product_list(product_dict):
     #This screen show the product list
     class Table:
@@ -348,6 +349,7 @@ def system_setup():
     #Loading product list
     file = path + filename
     products = read_dictionary_from_file(file, key_column_index)
+
     return products
 
 def read_dictionary_from_file(filename, key_column_index):
@@ -473,6 +475,10 @@ def exec_del_product(product_dict, id):
         messagebox_manager(code,msg)
 
 #Functions section end----------------------------------------------------------- 
+
+#Product Management Section End -------------------------------------------------
+
+#
 
 # Call main to start this program.
 if __name__ == "__main__":
