@@ -203,6 +203,7 @@ def alt_product(crud_win,product_dict):
     global product_id_entry
     product_id_entry = ttk.Entry(alt_product_window, width = 20)
     product_id_entry.grid(row=0, column=1, sticky=tk.W, padx=5, pady=5)
+    product_id_entry.bind('<KeyRelease>', lambda  p=product_dict :alt_autocomplete(product_dict))
 
     lb2 = ttk.Label(alt_product_window, text="Product name:")
     lb2.grid(row=1, column=0, sticky=tk.E, padx=5, pady=5)
@@ -240,7 +241,7 @@ def del_product(crud_win,product_dict):
     global product_id_entry
     product_id_entry = ttk.Entry(del_product_window, width = 20)
     product_id_entry.grid(row=0, column=1, sticky=tk.W, padx=5, pady=5)
-    product_id_entry.bind('<KeyRelease>', lambda  p=product_dict :autocomplete(product_dict))
+    product_id_entry.bind('<KeyRelease>', lambda  p=product_dict :del_autocomplete(product_dict))
 
     lb2 = ttk.Label(del_product_window, text='Product name:')
     lb2.grid(row=1, column=0, sticky=tk.E, padx=5, pady=5)
@@ -267,13 +268,37 @@ def del_product(crud_win,product_dict):
     
     root.eval(f'tk::PlaceWindow {str(del_product_window)} center')
 
-def autocomplete(product_dict):  
+
+def alt_autocomplete(product_dict):  
     i = product_id_entry.get()
     if i in product_dict:
+        #Product found
         l = product_dict[i] 
+        #Cleaning entry fields
+        product_name_entry.delete(0, tk.END)
+        product_qtd_entry.delete(0, tk.END)
+        #Showing product in the screen
+        product_name_entry.insert(0, l[1])
+        product_qtd_entry.insert(0, l[2])
+    else:
+        #Product not found
+        #Cleaning protuct in screen
+        product_name_entry.delete(0, tk.END)
+        product_qtd_entry.delete(0, tk.END)
+
+def del_autocomplete(product_dict):  
+    i = product_id_entry.get()
+    if i in product_dict:
+        #Product found
+        l = product_dict[i] 
+        #Showing product in the screen
         product_name_entry.config(text = l[1])
         product_qtd_entry.config(text =l[2])
-
+    else:
+        #Product not found
+        #Cleaning protuct in screen
+        product_name_entry.config(text = '')
+        product_qtd_entry.config(text = '')
 
 def exit(win, product_dict):
     #Destroy current window
@@ -365,7 +390,7 @@ def read_dictionary_from_file(filename, key_column_index):
 def save_dictionary_in_file(filename,dict):
     with open(filename, "w") as csv_file:
         #Save first line
-        csv_file.write('Product #,Name,Price')
+        csv_file.write('Product #,Name,Price\n')
         for i in dict:
             l = dict[i]
             csv_file.write(f'{l[0]},{l[1]},{l[2]}\n')
