@@ -127,7 +127,7 @@ def show_product_list(product_dict):
 
     bt_ins_product_list = ttk.Button(frame2, text='Insert', width = 20, command= lambda:ins_new_product(crud_win, product_dict))
     bt_alt_product_list = ttk.Button(frame2, text='Update', width =  20, command= lambda:alt_product(crud_win,product_dict))
-    bt_del_product_list = ttk.Button(frame2, text='Delete', width = 20)
+    bt_del_product_list = ttk.Button(frame2, text='Delete', width = 20, command= lambda:del_product(crud_win,product_dict))
 
           
     #Creating an exit button
@@ -183,25 +183,6 @@ def ins_new_product(crud_win, product_dict):
     root.eval(f'tk::PlaceWindow {str(insert_product_window)} center')
 
 
-def exit(win, product_dict):
-    #Destroy current window
-    win.destroy()
-    #Show product list and crud window
-    show_product_list(product_dict)
-
-def messagebox_manager(code, msg):
-    # code = 0 product already exists
-    if code == 0:
-        messagebox.showwarning('Pegasus', msg)
-    elif code == 1:
-    # code = 1 product saved with success
-        messagebox.showinfo('Pegasus', msg)
-    elif code == 2:
-    # code = 2 error
-        messagebox.showerror('Pegasus', msg)
-    # After message return focus to product_id_entry
-    product_id_entry.focus()
-
 def insert_product_clear():
     #Cleaning product id entry
     product_id_entry.delete(0,tk.END)
@@ -237,7 +218,7 @@ def alt_product(crud_win,product_dict):
     product_qtd_entry = ttk.Entry(alt_product_window, width = 20)
     product_qtd_entry.grid(row=2, column=1, sticky=tk.W, padx=5, pady=5)
     
-    btn_close_prod = ttk.Button(alt_product_window, text='Close', width = 20, command = lambda:exit(alt_product_window, crud_win,product_dict))
+    btn_close_prod = ttk.Button(alt_product_window, text='Close', width = 20, command = lambda:exit(alt_product_window, product_dict))
     btn_close_prod.grid(row=4, column=1, sticky=tk.W, padx=5, pady=5)
 
     btn_save_prod = ttk.Button(alt_product_window, text='Save', width = 20, command= lambda:save_alt_product(product_dict, product_id_entry.get(),product_name_entry.get(), product_qtd_entry.get()))
@@ -246,7 +227,85 @@ def alt_product(crud_win,product_dict):
     
     root.eval(f'tk::PlaceWindow {str(alt_product_window)} center')
     
+
+def del_product(crud_win,product_dict):
+    crud_win.destroy()
+    # Creating delete product window
+    del_product_window = tk.Toplevel(root)
+    del_product_window.title('Pegasus - Product list management')
+ 
+    lb1 = ttk.Label(del_product_window, text='Product ID:')
+    lb1.grid(row=0, column=0, sticky=tk.E, padx=5, pady=5)
+
+    global product_id_entry
+    product_id_entry = ttk.Entry(del_product_window, width = 20)
+    product_id_entry.grid(row=0, column=1, sticky=tk.W, padx=5, pady=5)
+    product_id_entry.bind('<KeyRelease>', lambda  p=product_dict :autocomplete(product_dict))
+
+    lb2 = ttk.Label(del_product_window, text='Product name:')
+    lb2.grid(row=1, column=0, sticky=tk.E, padx=5, pady=5)
+
+    global product_name_entry
+    product_name_entry = ttk.Label(del_product_window, text='')
+    product_name_entry.grid(row=1, column=1, sticky=tk.W, padx=5, pady=5, columnspan=5)
+
+    lb3 = ttk.Label(del_product_window, text='Quantity:')
+    lb3.grid(row=2, column=0, sticky=tk.E, padx=5, pady=5)
+
+    global product_qtd_entry
+    product_qtd_entry = ttk.Label(del_product_window, text='')
+    product_qtd_entry.grid(row=2, column=1, sticky=tk.W, padx=5, pady=5)
+
     
+    
+    btn_close_prod = ttk.Button(del_product_window, text='Close', width = 20, command = lambda:exit(del_product_window, product_dict))
+    btn_close_prod.grid(row=4, column=1, sticky=tk.W, padx=5, pady=5)
+
+    btn_delete_prod = ttk.Button(del_product_window, text='Delete', width = 20, command= lambda:exec_del_product(product_dict, product_id_entry.get()))
+    btn_delete_prod.grid(row=4, column=2, sticky=tk.W, padx=5, pady=5)
+
+    
+    root.eval(f'tk::PlaceWindow {str(del_product_window)} center')
+
+def autocomplete(product_dict):  
+    i = product_id_entry.get()
+    if i in product_dict:
+        l = product_dict[i] 
+        product_name_entry.config(text = l[1])
+        product_qtd_entry.config(text =l[2])
+
+
+def exit(win, product_dict):
+    #Destroy current window
+    win.destroy()
+    #Show product list and crud window
+    show_product_list(product_dict)
+
+def messagebox_manager(code, msg):
+    # code = 0 means product already exists
+    answer = False
+    if code == 0:
+        messagebox.showwarning('Pegasus', msg)
+    elif code == 1:
+    # code = 1 means product saved/erased with success
+        messagebox.showinfo('Pegasus', msg)
+    elif code == 2:
+    # code = 2 means error
+        messagebox.showerror('Pegasus', msg)
+    elif code == 3:
+    # code = 3 means delete message
+        answer = messagebox.askyesno(msg, 'Confirm action?')
+    # After message return focus to product_id_entry
+    elif code == 4:
+    #Code 4 means operation canceled
+        messagebox.showinfo('Pegasus', msg)
+
+    product_id_entry.focus()
+    
+    return answer
+
+
+
 #GUI section end ------------------------------------------------------------------
 
 
@@ -305,6 +364,8 @@ def read_dictionary_from_file(filename, key_column_index):
     return dictionary
 def save_dictionary_in_file(filename,dict):
     with open(filename, "w") as csv_file:
+        #Save first line
+        csv_file.write('Product #,Name,Price')
         for i in dict:
             l = dict[i]
             csv_file.write(f'{l[0]},{l[1]},{l[2]}\n')
@@ -355,6 +416,31 @@ def save_alt_product(product_dict, id,name,qtd):
     except ValueError as val_err:
         code = 2
         msg = f'Invalid quantity: {qtd}'
+    except FileNotFoundError as file_err:
+        code = 2
+        msg = f'File {file} not found'
+    finally:
+        messagebox_manager(code,msg)
+
+
+def exec_del_product(product_dict, id):
+    try:  
+        code = -1
+        if id in product_dict:
+            answer = messagebox_manager(3, f'Confirms deletion of the product with ID {id}')
+            if answer:
+                product_dict.pop(id)
+                file = path + filename
+                save_dictionary_in_file(file,product_dict)
+                code = 1
+                msg = 'Data erased successfully'
+            else:
+                code = 4
+                msg = 'Operation canceled'
+                
+        else:
+            code = 0
+            msg = f"Product ID {id} doesn't exists"
     except FileNotFoundError as file_err:
         code = 2
         msg = f'File {file} not found'
