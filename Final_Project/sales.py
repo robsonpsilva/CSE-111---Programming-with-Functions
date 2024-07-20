@@ -76,7 +76,8 @@ def run_opt(opt, product_dict):
         show_product_list(product_dict)
 
     elif opt.get() == '2':
-        ...
+        root.withdraw()
+        request_window(product_dict)
 
 #Product Management Section Begin ------------------------------------------------
 """
@@ -167,7 +168,7 @@ def ins_new_product(crud_win, product_dict):
     product_name_entry = ttk.Entry(insert_product_window, width = 50)
     product_name_entry.grid(row=1, column=1, sticky=tk.W, padx=5, pady=5, columnspan=5)
 
-    lb3 = ttk.Label(insert_product_window, text="Quantity:")
+    lb3 = ttk.Label(insert_product_window, text="Price:")
     lb3.grid(row=2, column=0, sticky=tk.E, padx=5, pady=5)
 
     global product_qtd_entry
@@ -189,7 +190,7 @@ def insert_product_clear():
     product_id_entry.delete(0,tk.END)
     #Cleaning product name entry
     product_name_entry.delete(0,tk.END)
-    #Cleaning product quantity entry
+    #Cleaning product Price entry
     product_qtd_entry.delete(0, tk.END)
     
 def alt_product(crud_win,product_dict):
@@ -213,7 +214,7 @@ def alt_product(crud_win,product_dict):
     product_name_entry = ttk.Entry(alt_product_window, width = 50)
     product_name_entry.grid(row=1, column=1, sticky=tk.W, padx=5, pady=5, columnspan=5)
 
-    lb3 = ttk.Label(alt_product_window, text="Quantity:")
+    lb3 = ttk.Label(alt_product_window, text="Price:")
     lb3.grid(row=2, column=0, sticky=tk.E, padx=5, pady=5)
 
     global product_qtd_entry
@@ -251,7 +252,7 @@ def del_product(crud_win,product_dict):
     product_name_entry = ttk.Label(del_product_window, text='')
     product_name_entry.grid(row=1, column=1, sticky=tk.W, padx=5, pady=5, columnspan=5)
 
-    lb3 = ttk.Label(del_product_window, text='Quantity:')
+    lb3 = ttk.Label(del_product_window, text='Price:')
     lb3.grid(row=2, column=0, sticky=tk.E, padx=5, pady=5)
 
     global product_qtd_entry
@@ -300,6 +301,20 @@ def del_autocomplete(product_dict):
         #Cleaning protuct in screen
         product_name_entry.config(text = '')
         product_qtd_entry.config(text = '')
+
+def req_autocomplete(product_dict):  
+    i = req_product_id.get()
+    if i in product_dict:
+        #Product found
+        l = product_dict[i] 
+        #Showing product in the screen
+        req_product_name.config(text = l[1])
+        req_product_price.config(text =l[2])
+    else:
+        #Product not found
+        #Cleaning protuct in screen
+        req_product_name.config(text = '')
+        req_product_price.config(text = '')
 
 def exit(win, product_dict):
     #Destroy current window
@@ -403,7 +418,7 @@ def save_new_product(product_dict, id,name,qtd):
             code = 0
             msg = f'Product ID {id} already exists'
         else:
-            quantity = float(qtd)
+            Price = float(qtd)
             #creating a product list structure
             l = [id,name,qtd]
             #Store the new product in list
@@ -416,7 +431,7 @@ def save_new_product(product_dict, id,name,qtd):
             insert_product_clear()
     except ValueError as val_err:
         code = 2
-        msg = f'Invalid quantity: {qtd}'
+        msg = f'Invalid Price: {qtd}'
     except FileNotFoundError as file_err:
         code = 2
         msg = f'File {file} not found'
@@ -426,7 +441,7 @@ def save_new_product(product_dict, id,name,qtd):
 def save_alt_product(product_dict, id,name,qtd):
     try:
         if id in product_dict:
-            quantity = float(qtd)
+            Price = float(qtd)
             #creating a product list structure
             l = [id,name,qtd]
             #Store the product in list
@@ -442,7 +457,7 @@ def save_alt_product(product_dict, id,name,qtd):
     
     except ValueError as val_err:
         code = 2
-        msg = f'Invalid quantity: {qtd}'
+        msg = f'Invalid Price: {qtd}'
     except FileNotFoundError as file_err:
         code = 2
         msg = f'File {file} not found'
@@ -478,7 +493,91 @@ def exec_del_product(product_dict, id):
 
 #Product Management Section End -------------------------------------------------
 
-#
+#Request management section beguin
+
+#Request window GUI
+def request_window(product_dict):
+
+    #This screen show the product list
+    class Table:
+        def __init__(self,root):
+             
+            # code for creating table
+            for i in range(total_rows):
+                for j in range(total_columns):
+                    
+                    self.e = Entry(root, width=20, fg='blue',
+                                font=('Arial',16,'bold'))
+                    
+                    self.e.grid(row=i, column=j)
+                    self.e.insert(END, product_list[i][j])
+
+    product_list = []
+    # initializing table
+    total_rows = 0
+
+    #id, name, qtd, total
+    total_columns = 4
+
+
+
+    #creating product crud window
+    req_win = tk.Toplevel(root)
+    req_win.title('Pegasus - Request management')
+   
+    req_frame1 = Frame(req_win)
+    req_frame1.pack(pady=5, padx=10)
+    
+    req_frame2 = Frame(req_win)
+    req_frame2.pack(pady=5, padx=10)
+
+    req_lb1 = ttk.Label(req_frame1, text='Product ID:')
+    req_lb1.grid(row=0, column=0, sticky=tk.E, padx=5, pady=5)
+
+    global req_product_id
+    req_product_id = ttk.Entry(req_frame1, width = 20)
+    req_product_id.grid(row=0, column=1, sticky=tk.W, padx=5, pady=5)
+    req_product_id.bind('<KeyRelease>', lambda  p=product_dict :req_autocomplete(product_dict))
+
+    req_lb2 = ttk.Label(req_frame1, text='Product name:')
+    req_lb2.grid(row=1, column=0, sticky=tk.E, padx=5, pady=5)
+
+    global req_product_name
+    req_product_name = ttk.Label(req_frame1, text='')
+    req_product_name.grid(row=1, column=1, sticky=tk.W, padx=5, pady=5, columnspan=5)
+
+    req_lb3 = ttk.Label(req_frame1, text='Price:')
+    req_lb3.grid(row=2, column=0, sticky=tk.E, padx=5, pady=5)
+
+    global req_product_price
+    req_product_price = ttk.Label(req_frame1, text='')
+    req_product_price.grid(row=2, column=1, sticky=tk.W, padx=5, pady=5)
+
+    
+    req_lb4 = ttk.Label(req_frame1, text='Quantity:')
+    req_lb4.grid(row=3, column=0, sticky=tk.E, padx=5, pady=5)
+    
+    global req_product_qtd_entry
+    req_product_qtd_entry = ttk.Entry(req_frame1, width = 20)
+    req_product_qtd_entry.grid(row=3, column=1, sticky=tk.W, padx=5, pady=5)
+
+    req_btn_close = ttk.Button(req_frame1, text='Close', width = 20, command= lambda:crud_win_exit(req_win))
+    req_btn_close.grid(row=4, column=1, sticky=tk.W, padx=5, pady=5)
+    
+    #Centralizing the window
+    root.eval(f'tk::PlaceWindow {str(req_win)} center')   
+"""
+    # initializing table
+    total_rows = 0
+
+    #id, name, qtd, total
+    total_columns = 4
+
+    product_list = []
+
+    #Creating and populating product list table
+    t = Table(req_frame1)
+"""
 
 # Call main to start this program.
 if __name__ == "__main__":
