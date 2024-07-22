@@ -506,37 +506,42 @@ def request_window(product_dict):
             for i in range(total_rows):
                 for j in range(total_columns):
                     
-                    self.e = Entry(root, width=20, fg='blue',
-                                font=('Arial',16,'bold'))
+                    if j == 0 or j == 2:
+                        self.e = Entry(root, width=5, fg='blue',
+                                font=('Arial',10,'bold'))
+                    elif j == 1:
+                        self.e = Entry(root, width=35, fg='blue',
+                                font=('Arial',10,'bold'))
+                    elif j == 3:
+                        self.e = Entry(root, width=10, fg='blue',
+                                font=('Arial',10,'bold'))
+
                     
                     self.e.grid(row=i, column=j)
                     self.e.insert(END, product_list[i][j])
 
-    product_list = []
-    # initializing table
-    total_rows = 0
 
-    #id, name, qtd, total
-    total_columns = 4
-
-
-
-    #creating product crud window
+    #creating request crud window
     req_win = tk.Toplevel(root)
     req_win.title('Pegasus - Request management')
    
+    #Creating and organizing frames
     req_frame1 = Frame(req_win)
-    req_frame1.pack(pady=5, padx=10)
+    req_frame1.grid(row=0, column=0, pady=5, padx=10, sticky=tk.W)
     
     req_frame2 = Frame(req_win)
-    req_frame2.pack(pady=5, padx=10)
+    req_frame2.grid(row=1, column=0, pady=5, padx=10)
 
+    req_frame3 = Frame(req_win)
+    req_frame3.grid(row=2, column=0, pady=5, padx=10)
+
+    #Creating and puting components on frames
     req_lb1 = ttk.Label(req_frame1, text='Product ID:')
     req_lb1.grid(row=0, column=0, sticky=tk.E, padx=5, pady=5)
 
     global req_product_id
-    req_product_id = ttk.Entry(req_frame1, width = 20)
-    req_product_id.grid(row=0, column=1, sticky=tk.W, padx=5, pady=5)
+    req_product_id = ttk.Entry(req_frame1, width = 30)
+    req_product_id.grid(row=0, column=1, sticky=tk.W, padx=5, pady=5, columnspan=3)
     req_product_id.bind('<KeyRelease>', lambda  p=product_dict :req_autocomplete(product_dict))
 
     req_lb2 = ttk.Label(req_frame1, text='Product name:')
@@ -550,8 +555,8 @@ def request_window(product_dict):
     req_lb3.grid(row=2, column=0, sticky=tk.E, padx=5, pady=5)
 
     global req_product_price
-    req_product_price = ttk.Label(req_frame1, text='')
-    req_product_price.grid(row=2, column=1, sticky=tk.W, padx=5, pady=5)
+    req_product_price = ttk.Label(req_frame1, width = 50,  text='')
+    req_product_price.grid(row=2, column=1, sticky=tk.W, padx=5, pady=5, columnspan=3)
 
     
     req_lb4 = ttk.Label(req_frame1, text='Quantity:')
@@ -559,25 +564,33 @@ def request_window(product_dict):
     
     global req_product_qtd_entry
     req_product_qtd_entry = ttk.Entry(req_frame1, width = 20)
-    req_product_qtd_entry.grid(row=3, column=1, sticky=tk.W, padx=5, pady=5)
+    req_product_qtd_entry.grid(row=3, column=1, sticky=tk.W, padx=5, pady=5, columnspan=3)
 
-    req_btn_close = ttk.Button(req_frame1, text='Close', width = 20, command= lambda:crud_win_exit(req_win))
-    req_btn_close.grid(row=4, column=1, sticky=tk.W, padx=5, pady=5)
+    req_btn_close = ttk.Button(req_frame2, text='Close', width = 20, command= lambda:crud_win_exit(req_win))
+    req_btn_close.grid(row=4, column=0, sticky=tk.W, padx=5, pady=5)
     
-    #Centralizing the window
-    root.eval(f'tk::PlaceWindow {str(req_win)} center')   
-"""
+    req_btn_save = ttk.Button(req_frame2, text='Save', width = 20, command= '')
+    req_btn_save.grid(row=4, column=1, sticky=tk.W, padx=5, pady=5)
+
+    req_btn_delete = ttk.Button(req_frame2, text='Delete', width = 20, command= '')
+    req_btn_delete.grid(row=4, column=2, sticky=tk.W, padx=5, pady=5)
+
+
     # initializing table
-    total_rows = 0
+    total_rows = 1
 
     #id, name, qtd, total
     total_columns = 4
 
-    product_list = []
+    product_list = [['id', 'Name', 'Qtd', 'Total']]
 
     #Creating and populating product list table
-    t = Table(req_frame1)
-"""
+    t = Table(req_frame3)
+
+
+    #Centralizing the window
+    root.eval(f'tk::PlaceWindow {str(req_win)} center')   
+
 
 # Call main to start this program.
 if __name__ == "__main__":
