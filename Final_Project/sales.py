@@ -109,6 +109,9 @@ def show_product_list(product_dict):
 
     # find total number of rows and
     # columns in list
+
+    global total_rows
+    global total_columns
     total_rows = len(product_list)
     total_columns = len(product_list[0])
 
@@ -498,29 +501,7 @@ def exec_del_product(product_dict, id):
 #Request window GUI
 def request_window(product_dict):
 
-    #This screen show the product list
-    class Table:
-        def __init__(self,root):
-             
-            # code for creating table
-            for i in range(total_rows):
-                for j in range(total_columns):
-                    
-                    if j == 0 or j == 2:
-                        self.e = Entry(root, width=5, fg='blue',
-                                font=('Arial',10,'bold'))
-                    elif j == 1:
-                        self.e = Entry(root, width=35, fg='blue',
-                                font=('Arial',10,'bold'))
-                    elif j == 3:
-                        self.e = Entry(root, width=10, fg='blue',
-                                font=('Arial',10,'bold'))
-
-                    
-                    self.e.grid(row=i, column=j)
-                    self.e.insert(END, product_list[i][j])
-
-
+    product_list = [['Id', 'Name', 'Price','Quantity', 'Total']]
     #creating request crud window
     req_win = tk.Toplevel(root)
     req_win.title('Pegasus - Request management')
@@ -532,6 +513,7 @@ def request_window(product_dict):
     req_frame2 = Frame(req_win)
     req_frame2.grid(row=1, column=0, pady=5, padx=10)
 
+    global req_frame3
     req_frame3 = Frame(req_win)
     req_frame3.grid(row=2, column=0, pady=5, padx=10)
 
@@ -566,31 +548,72 @@ def request_window(product_dict):
     req_product_qtd_entry = ttk.Entry(req_frame1, width = 20)
     req_product_qtd_entry.grid(row=3, column=1, sticky=tk.W, padx=5, pady=5, columnspan=3)
 
-    req_btn_close = ttk.Button(req_frame2, text='Close', width = 20, command= lambda:crud_win_exit(req_win))
+    req_btn_close = ttk.Button(req_frame2, text='Close', width = 30, command= lambda:crud_win_exit(req_win))
     req_btn_close.grid(row=4, column=0, sticky=tk.W, padx=5, pady=5)
     
-    req_btn_save = ttk.Button(req_frame2, text='Save', width = 20, command= '')
-    req_btn_save.grid(row=4, column=1, sticky=tk.W, padx=5, pady=5)
+    req_btn_insert = ttk.Button(req_frame2, text='Insert', width = 30, 
+                                command= lambda:insert_request_item(product_list, req_product_id.get(), req_product_name.cget("text"),
+                                                                    req_product_price.cget("text"), req_product_qtd_entry.get()))
+    req_btn_insert.grid(row=4, column=1, sticky=tk.W, padx=5, pady=5)
 
-    req_btn_delete = ttk.Button(req_frame2, text='Delete', width = 20, command= '')
+    req_btn_delete = ttk.Button(req_frame2, text='Delete', width = 30, command= '')
     req_btn_delete.grid(row=4, column=2, sticky=tk.W, padx=5, pady=5)
-
-
-    # initializing table
-    total_rows = 1
-
-    #id, name, qtd, total
-    total_columns = 4
-
-    product_list = [['id', 'Name', 'Qtd', 'Total']]
-
-    #Creating and populating product list table
-    t = Table(req_frame3)
-
 
     #Centralizing the window
     root.eval(f'tk::PlaceWindow {str(req_win)} center')   
 
+#Functions
+
+def insert_request_item(product_list, req_product_id, req_product_name, req_product_price, req_product_qtd_entry):
+    
+    #Creating and populating product list table
+    #This screen show the product list
+    class Table:
+        def __init__(self,root, total_rows, total_colums):
+             
+            # code for creating table
+            for i in range(total_rows):
+                for j in range(total_columns):
+                    if i == 0:
+                        if j == 0 or j == 2:
+                            self.e = Label(root, width=5, fg='blue',
+                                    font=('Arial',12,'bold'), borderwidth=2, relief="groove", text=product_list[i][j])
+                        elif j ==1:
+                            self.e = Label(root, width=35, fg='blue',
+                                    font=('Arial',12,'bold'), borderwidth=2, relief="groove", text=product_list[i][j])   
+                        elif j == 3:
+                            self.e = Label(root, width=10, fg='blue',
+                                    font=('Arial',12,'bold'), borderwidth=2, relief="groove", text=product_list[i][j]) 
+                        elif j == 4:
+                            self.e = Label(root, width=10, fg='blue',
+                                    font=('Arial',12,'bold'), borderwidth=2, relief="groove", text=product_list[i][j]) 
+                        
+                    else:
+                        if j == 0 or j == 2:
+                            self.e = Label(root, width=5, fg='black',
+                                    font=('Arial',10,'bold'), borderwidth=2, relief="groove", text=product_list[i][j])
+                        elif j ==1:
+                            self.e = Label(root, width=35, fg='black',
+                                    font=('Arial',10,'bold'), borderwidth=2, relief="groove", text=product_list[i][j])   
+                        elif j == 3:
+                            self.e = Label(root, width=10, fg='black',
+                                    font=('Arial',10,'bold'), borderwidth=2, relief="groove", text=product_list[i][j])
+                        elif j == 4:
+                            self.e = Label(root, width=10, fg='black',
+                                    font=('Arial',10,'bold'), borderwidth=2, relief="groove", text=product_list[i][j])
+                    self.e.grid(row=i, column=j,sticky="nsew")
+
+    # initializing table
+    # find total number of rows and
+    # columns in list
+
+    product_list.append([req_product_id, req_product_name, req_product_price, 
+                         req_product_qtd_entry, f'{(float(req_product_price) * float(req_product_qtd_entry)):.2f}'])
+
+    total_rows = len(product_list)
+    total_columns = len(product_list[0])
+  
+    t = Table(req_frame3, total_rows, total_columns)
 
 # Call main to start this program.
 if __name__ == "__main__":
