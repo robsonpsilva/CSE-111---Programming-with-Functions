@@ -343,6 +343,9 @@ def messagebox_manager(code, msg):
     elif code == 4:
     #Code 4 means operation canceled
         messagebox.showinfo('Pegasus', msg)
+    elif code == 5:
+    # Code 5 means product not find in request list
+        messagebox.showwarning('Pegasus', msg)  
 
     product_id_entry.focus()
     
@@ -556,7 +559,7 @@ def request_window(product_dict):
                                                                     req_product_price.cget("text"), req_product_qtd_entry.get()))
     req_btn_insert.grid(row=4, column=1, sticky=tk.W, padx=5, pady=5)
 
-    req_btn_delete = ttk.Button(req_frame2, text='Delete', width = 30, command= '')
+    req_btn_delete = ttk.Button(req_frame2, text='Delete', width = 30, command= lambda:delete_request_item(product_list, req_product_id.get()))
     req_btn_delete.grid(row=4, column=2, sticky=tk.W, padx=5, pady=5)
 
     #Centralizing the window
@@ -569,37 +572,42 @@ def insert_request_item(product_list, req_product_id, req_product_name, req_prod
     #Creating and populating product list table
     #This screen show the product list
     class Table:
-        def __init__(self,root, total_rows, total_colums):
+        def __init__(self,root, total_rows, total_columns):
              
             # code for creating table
             for i in range(total_rows):
+                l = i % 2
+                if l == 0:
+                    color = 'white'
+                else:
+                    color = 'aliceblue'
                 for j in range(total_columns):
                     if i == 0:
                         if j == 0 or j == 2:
-                            self.e = Label(root, width=5, fg='blue',
+                            self.e = Label(root, width=5, fg='blue', bg= 'wheat',
                                     font=('Arial',12,'bold'), borderwidth=2, relief="groove", text=product_list[i][j])
                         elif j ==1:
-                            self.e = Label(root, width=35, fg='blue',
+                            self.e = Label(root, width=35, fg='blue', bg= 'wheat',
                                     font=('Arial',12,'bold'), borderwidth=2, relief="groove", text=product_list[i][j])   
                         elif j == 3:
-                            self.e = Label(root, width=10, fg='blue',
+                            self.e = Label(root, width=10, fg='blue', bg= 'wheat',
                                     font=('Arial',12,'bold'), borderwidth=2, relief="groove", text=product_list[i][j]) 
                         elif j == 4:
-                            self.e = Label(root, width=10, fg='blue',
+                            self.e = Label(root, width=10, fg='blue', bg= 'wheat',
                                     font=('Arial',12,'bold'), borderwidth=2, relief="groove", text=product_list[i][j]) 
                         
                     else:
                         if j == 0 or j == 2:
-                            self.e = Label(root, width=5, fg='black',
+                            self.e = Label(root, width=5, fg='black', bg=color,
                                     font=('Arial',10,'bold'), borderwidth=2, relief="groove", text=product_list[i][j])
                         elif j ==1:
-                            self.e = Label(root, width=35, fg='black',
+                            self.e = Label(root, width=35, fg='black', bg=color,
                                     font=('Arial',10,'bold'), borderwidth=2, relief="groove", text=product_list[i][j])   
                         elif j == 3:
-                            self.e = Label(root, width=10, fg='black',
+                            self.e = Label(root, width=10, fg='black',bg=color,
                                     font=('Arial',10,'bold'), borderwidth=2, relief="groove", text=product_list[i][j])
                         elif j == 4:
-                            self.e = Label(root, width=10, fg='black',
+                            self.e = Label(root, width=10, fg='black', bg=color,
                                     font=('Arial',10,'bold'), borderwidth=2, relief="groove", text=product_list[i][j])
                     self.e.grid(row=i, column=j,sticky="nsew")
 
@@ -614,6 +622,71 @@ def insert_request_item(product_list, req_product_id, req_product_name, req_prod
     total_columns = len(product_list[0])
   
     t = Table(req_frame3, total_rows, total_columns)
+
+def delete_request_item(product_list, req_product_id):
+    
+    #Creating and populating product list table
+    #This screen show the product list
+    class Table:
+        def __init__(self,root, total_rows, total_columns):
+             
+            # code for creating table
+            for i in range(total_rows):
+                l = i % 2
+                if l == 0:
+                    color = 'white'
+                else:
+                    color = 'aliceblue'
+                for j in range(total_columns):
+                    if i == 0:
+                        if j == 0 or j == 2:
+                            self.e = Label(root, width=5, fg='blue', bg= 'wheat',
+                                    font=('Arial',12,'bold'), borderwidth=2, relief="groove", text=product_list[i][j])
+                        elif j ==1:
+                            self.e = Label(root, width=35, fg='blue', bg= 'wheat',
+                                    font=('Arial',12,'bold'), borderwidth=2, relief="groove", text=product_list[i][j])   
+                        elif j == 3:
+                            self.e = Label(root, width=10, fg='blue', bg= 'wheat',
+                                    font=('Arial',12,'bold'), borderwidth=2, relief="groove", text=product_list[i][j]) 
+                        elif j == 4:
+                            self.e = Label(root, width=10, fg='blue', bg= 'wheat',
+                                    font=('Arial',12,'bold'), borderwidth=2, relief="groove", text=product_list[i][j]) 
+                        
+                    else:
+                        if j == 0 or j == 2:
+                            self.e = Label(root, width=5, fg='black', bg=color,
+                                    font=('Arial',10,'bold'), borderwidth=2, relief="groove", text=product_list[i][j])
+                        elif j ==1:
+                            self.e = Label(root, width=35, fg='black', bg=color,
+                                    font=('Arial',10,'bold'), borderwidth=2, relief="groove", text=product_list[i][j])   
+                        elif j == 3:
+                            self.e = Label(root, width=10, fg='black',bg=color,
+                                    font=('Arial',10,'bold'), borderwidth=2, relief="groove", text=product_list[i][j])
+                        elif j == 4:
+                            self.e = Label(root, width=10, fg='black', bg=color,
+                                    font=('Arial',10,'bold'), borderwidth=2, relief="groove", text=product_list[i][j])
+                    self.e.grid(row=i, column=j,sticky="nsew")
+
+    
+    total_rows = len(product_list)
+    k = 0
+    for j in product_list:
+        try:
+            k += 1
+            i = j.index(req_product_id)
+            del product_list[k-1]
+            code = 6
+            msg =f'Product {req_product_id} deleted successfully .'
+            total_rows = len(product_list)
+            total_columns = len(product_list[0])
+            t = Table(req_frame3, total_rows, total_columns)
+        except ValueError as v_err:
+            if k == total_rows: 
+                code = 5
+                msg = f'The product {req_product_id} is not in the order.'
+                messagebox_manager(code, msg)
+            
+    print(i)
 
 # Call main to start this program.
 if __name__ == "__main__":
