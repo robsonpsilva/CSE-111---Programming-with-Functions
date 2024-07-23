@@ -411,10 +411,10 @@ def read_dictionary_from_file(filename, key_column_index):
                 dictionary[key] = row_list
     # Return the dictionary.
     return dictionary
-def save_dictionary_in_file(filename,dict):
+def save_dictionary_in_file(filename,dict, header):
     with open(filename, "w") as csv_file:
         #Save first line
-        csv_file.write('Product #,Name,Price\n')
+        csv_file.write(header)
         for i in dict:
             l = dict[i]
             csv_file.write(f'{l[0]},{l[1]},{l[2]}\n')
@@ -432,7 +432,8 @@ def save_new_product(product_dict, id,name,qtd):
             product_dict[id] = l
             #Save new product in file
             file = path + filename
-            save_dictionary_in_file(file,product_dict)
+            header = 'Product #,Name,Price\n'
+            save_dictionary_in_file(file,product_dict, header)
             code = 1
             msg = 'Data saved successfully'
             insert_product_clear()
@@ -455,7 +456,8 @@ def save_alt_product(product_dict, id,name,qtd):
             product_dict[id] = l
              #Save new product in file
             file = path + filename
-            save_dictionary_in_file(file,product_dict)
+            header = 'Product #,Name,Price\n'
+            save_dictionary_in_file(file,product_dict, header)
             code = 1
             msg = 'Data saved successfully'
         else:
@@ -480,7 +482,8 @@ def exec_del_product(product_dict, id):
             if answer:
                 product_dict.pop(id)
                 file = path + filename
-                save_dictionary_in_file(file,product_dict)
+                header = 'Product #,Name,Price\n'
+                save_dictionary_in_file(file,product_dict, header)
                 code = 1
                 msg = 'Data erased successfully'
             else:
@@ -505,7 +508,7 @@ def exec_del_product(product_dict, id):
 #Request window GUI
 def request_window(product_dict):
 
-    product_list = [['Id', 'Name', 'Price','Quantity', 'Total']]
+    request_list = [['Id', 'Name', 'Price','Quantity', 'Total']]
     #creating request crud window
     req_win = tk.Toplevel(root)
     req_win.title('Pegasus - Request management')
@@ -556,14 +559,14 @@ def request_window(product_dict):
     req_btn_close.grid(row=4, column=0, sticky=tk.W, padx=5, pady=5)
     
     req_btn_insert = ttk.Button(req_frame2, text='Insert', width = 25, 
-                                command= lambda:insert_request_item(product_list, req_product_id.get(), req_product_name.cget("text"),
+                                command= lambda:insert_request_item(request_list, req_product_id.get(), req_product_name.cget("text"),
                                                                     req_product_price.cget("text"), req_product_qtd_entry.get()))
     req_btn_insert.grid(row=4, column=1, sticky=tk.W, padx=5, pady=5)
 
-    req_btn_delete = ttk.Button(req_frame2, text='Delete', width = 25, command= lambda:delete_request_item(product_list, req_product_id.get()))
+    req_btn_delete = ttk.Button(req_frame2, text='Delete', width = 25, command= lambda:delete_request_item(request_list, req_product_id.get()))
     req_btn_delete.grid(row=4, column=2, sticky=tk.W, padx=5, pady=5)
 
-    req_btn_save = ttk.Button(req_frame2, text='Save', width = 25, command= lambda:save_request_item(product_list))
+    req_btn_save = ttk.Button(req_frame2, text='Save', width = 25, command= lambda:save_request_item(request_list))
     req_btn_save.grid(row=4, column=3, sticky=tk.W, padx=5, pady=5)
 
     #Centralizing the window
@@ -571,7 +574,7 @@ def request_window(product_dict):
 
 #Functions
 
-def insert_request_item(product_list, req_product_id, req_product_name, req_product_price, req_product_qtd_entry):
+def insert_request_item(request_list, req_product_id, req_product_name, req_product_price, req_product_qtd_entry):
     
     #Creating and populating product list table
     #This screen show the product list
@@ -589,45 +592,45 @@ def insert_request_item(product_list, req_product_id, req_product_name, req_prod
                     if i == 0:
                         if j == 0 or j == 2:
                             self.e = Label(root, width=5, fg='blue', bg= 'wheat',
-                                    font=('Arial',12,'bold'), borderwidth=2, relief="groove", text=product_list[i][j])
+                                    font=('Arial',12,'bold'), borderwidth=2, relief="groove", text=request_list[i][j])
                         elif j ==1:
                             self.e = Label(root, width=35, fg='blue', bg= 'wheat',
-                                    font=('Arial',12,'bold'), borderwidth=2, relief="groove", text=product_list[i][j])   
+                                    font=('Arial',12,'bold'), borderwidth=2, relief="groove", text=request_list[i][j])   
                         elif j == 3:
                             self.e = Label(root, width=10, fg='blue', bg= 'wheat',
-                                    font=('Arial',12,'bold'), borderwidth=2, relief="groove", text=product_list[i][j]) 
+                                    font=('Arial',12,'bold'), borderwidth=2, relief="groove", text=request_list[i][j]) 
                         elif j == 4:
                             self.e = Label(root, width=10, fg='blue', bg= 'wheat',
-                                    font=('Arial',12,'bold'), borderwidth=2, relief="groove", text=product_list[i][j]) 
+                                    font=('Arial',12,'bold'), borderwidth=2, relief="groove", text=request_list[i][j]) 
                         
                     else:
                         if j == 0 or j == 2:
                             self.e = Label(root, width=5, fg='black', bg=color,
-                                    font=('Arial',10,'bold'), borderwidth=2, relief="groove", text=product_list[i][j])
+                                    font=('Arial',10,'bold'), borderwidth=2, relief="groove", text=request_list[i][j])
                         elif j ==1:
                             self.e = Label(root, width=35, fg='black', bg=color,
-                                    font=('Arial',10,'bold'), borderwidth=2, relief="groove", text=product_list[i][j])   
+                                    font=('Arial',10,'bold'), borderwidth=2, relief="groove", text=request_list[i][j])   
                         elif j == 3:
                             self.e = Label(root, width=10, fg='black',bg=color,
-                                    font=('Arial',10,'bold'), borderwidth=2, relief="groove", text=product_list[i][j])
+                                    font=('Arial',10,'bold'), borderwidth=2, relief="groove", text=request_list[i][j])
                         elif j == 4:
                             self.e = Label(root, width=10, fg='black', bg=color,
-                                    font=('Arial',10,'bold'), borderwidth=2, relief="groove", text=product_list[i][j])
+                                    font=('Arial',10,'bold'), borderwidth=2, relief="groove", text=request_list[i][j])
                     self.e.grid(row=i, column=j,sticky="nsew")
 
     # initializing table
     # find total number of rows and
     # columns in list
 
-    product_list.append([req_product_id, req_product_name, req_product_price, 
+    request_list.append([req_product_id, req_product_name, req_product_price, 
                          req_product_qtd_entry, f'{(float(req_product_price) * float(req_product_qtd_entry)):.2f}'])
 
-    total_rows = len(product_list)
-    total_columns = len(product_list[0])
+    total_rows = len(request_list)
+    total_columns = len(request_list[0])
   
     t = Table(req_frame3, total_rows, total_columns)
 
-def delete_request_item(product_list, req_product_id):
+def delete_request_item(request_list, req_product_id):
     
     #Creating and populating product list table
     #This screen show the product list
@@ -645,30 +648,30 @@ def delete_request_item(product_list, req_product_id):
                     if i == 0:
                         if j == 0 or j == 2:
                             self.e = Label(root, width=5, fg='blue', bg= 'wheat',
-                                    font=('Arial',12,'bold'), borderwidth=2, relief="groove", text=product_list[i][j])
+                                    font=('Arial',12,'bold'), borderwidth=2, relief="groove", text=request_list[i][j])
                         elif j ==1:
                             self.e = Label(root, width=35, fg='blue', bg= 'wheat',
-                                    font=('Arial',12,'bold'), borderwidth=2, relief="groove", text=product_list[i][j])   
+                                    font=('Arial',12,'bold'), borderwidth=2, relief="groove", text=request_list[i][j])   
                         elif j == 3:
                             self.e = Label(root, width=10, fg='blue', bg= 'wheat',
-                                    font=('Arial',12,'bold'), borderwidth=2, relief="groove", text=product_list[i][j]) 
+                                    font=('Arial',12,'bold'), borderwidth=2, relief="groove", text=request_list[i][j]) 
                         elif j == 4:
                             self.e = Label(root, width=10, fg='blue', bg= 'wheat',
-                                    font=('Arial',12,'bold'), borderwidth=2, relief="groove", text=product_list[i][j]) 
+                                    font=('Arial',12,'bold'), borderwidth=2, relief="groove", text=request_list[i][j]) 
                         
                     else:
                         if j == 0 or j == 2:
                             self.e = Label(root, width=5, fg='black', bg=color,
-                                    font=('Arial',10,'bold'), borderwidth=2, relief="groove", text=product_list[i][j])
+                                    font=('Arial',10,'bold'), borderwidth=2, relief="groove", text=request_list[i][j])
                         elif j ==1:
                             self.e = Label(root, width=35, fg='black', bg=color,
-                                    font=('Arial',10,'bold'), borderwidth=2, relief="groove", text=product_list[i][j])   
+                                    font=('Arial',10,'bold'), borderwidth=2, relief="groove", text=request_list[i][j])   
                         elif j == 3:
                             self.e = Label(root, width=10, fg='black',bg=color,
-                                    font=('Arial',10,'bold'), borderwidth=2, relief="groove", text=product_list[i][j])
+                                    font=('Arial',10,'bold'), borderwidth=2, relief="groove", text=request_list[i][j])
                         elif j == 4:
                             self.e = Label(root, width=10, fg='black', bg=color,
-                                    font=('Arial',10,'bold'), borderwidth=2, relief="groove", text=product_list[i][j])
+                                    font=('Arial',10,'bold'), borderwidth=2, relief="groove", text=request_list[i][j])
                     self.e.grid(row=i, column=j,sticky="nsew")
 
 
@@ -677,17 +680,17 @@ def delete_request_item(product_list, req_product_id):
         widget.destroy() 
 
     #Deleting item and constructing a new table on screen
-    total_rows = len(product_list)
+    total_rows = len(request_list)
     k = 0
-    for j in product_list:
+    for j in request_list:
         try:
             k += 1
             i = j.index(req_product_id)
-            del product_list[k-1]
+            del request_list[k-1]
             code = 6
             msg =f'Product {req_product_id} deleted successfully .'
-            total_rows = len(product_list)
-            total_columns = len(product_list[0])
+            total_rows = len(request_list)
+            total_columns = len(request_list[0])
             t = Table(req_frame3, total_rows, total_columns)
         except ValueError as v_err:
             if k == total_rows: 
@@ -698,7 +701,15 @@ def delete_request_item(product_list, req_product_id):
     print(i)
 
 def save_request_item(product_list):
-    
+        code = 0
+        filename = path + filename_request
+        with open(filename, "w") as csv_file:
+        #Save first line
+            for i in product_list:
+                csv_file.write(f'{i[0]},{i[3]}\n')   
+            code = 1 
+        return code
+        
 # Call main to start this program.
 if __name__ == "__main__":
     main()
