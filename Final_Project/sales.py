@@ -1,9 +1,8 @@
-import csv
-import tkinter as tk
+import csv #We use this library to be able to import and manipulate CSV files.
+
+import tkinter as tk #We use tkinter to generate the graphical interface
 from tkinter import ttk
 from tkinter import *
-from datetime import datetime
-from tabulate import tabulate
 from tkinter import messagebox
 
 key_column_index = 0
@@ -32,7 +31,15 @@ def main():
 
 def show_main_window(product_dict):
     
-    #Creating main window
+    """
+
+        This function works mainly 
+        with creating the main screen 
+        and associating functions with 
+        the two-button click event.
+
+    """
+    #Start of creating the home/main screen ----------------------------------------------------
     global root
     root = tk.Tk()
     root.title('Pegasus - Store Front and Stock Management')
@@ -40,7 +47,6 @@ def show_main_window(product_dict):
     root.resizable(False, False)
     root.eval('tk::PlaceWindow . center')
 
-    #This function is responsible to mount the initial screen
     selected_opt = tk.StringVar(value=1)
 
     label = ttk.Label(text="Choose one of the options below")
@@ -62,14 +68,22 @@ def show_main_window(product_dict):
     )
     r.pack(fill='x', padx=20, pady=5)
 
+    #We insert two buttons (button1 and button2) below and associate functions, operations to be executed 
+    #once they are clicked.
+
+    #We associate the callback function run_opt(selected_opt, product_dict) that checks which option was
+    #selected on the screen, there is a radiobutton, and based on this information selects whether we
+    #will proceed to product or request management.
     button1 = ttk.Button(root, text="Ok", command= lambda:run_opt(selected_opt, product_dict))
 
     button1.pack(fill='x', padx=5, pady=5)
 
+    #To close the main window and the application, we call the native destroy function, below.
     button2 = ttk.Button(root, text='Close', command=root.destroy)
     button2.pack(fill='x', padx=5, pady=5)
+    #End of creating the home/main screen -----------------------------------------------------
 
-    root.mainloop()
+    root.mainloop() #Puting window to run.
 
 def run_opt(opt, product_dict):
     if opt.get() == '1':
@@ -85,8 +99,19 @@ def run_opt(opt, product_dict):
 This section contains the graphical interface and functions that manage inventory
 
 """
+
+
 def show_product_list(product_dict):
-    #This screen show the product list
+
+    """
+
+        This function creates the input screen for managing the product list.
+        It manages inclusion, deletion and modification of the list.
+
+    """
+
+    #The Table class creates and populates a table where our product 
+    #list is displayed.
     class Table:
         def __init__(self,root):
              
@@ -131,12 +156,18 @@ def show_product_list(product_dict):
     #Creating and populating product list table
     t = Table(frame1)
 
+    #At this point we associate functions that will
+    #handle the insertion, alteration and deletion 
+    #flows of items in the product list.
     bt_ins_product_list = ttk.Button(frame2, text='Insert', width = 20, command= lambda:ins_new_product(crud_win, product_dict))
     bt_alt_product_list = ttk.Button(frame2, text='Update', width =  20, command= lambda:alt_product(crud_win,product_dict))
     bt_del_product_list = ttk.Button(frame2, text='Delete', width = 20, command= lambda:del_product(crud_win,product_dict))
 
           
     #Creating an exit button
+    #The crud_win_exit function associated with this button
+    #not only closes the current window, it also shows the 
+    #previous one.
     bt_exit = ttk.Button(frame3, text='Close', width= 67, command= lambda:crud_win_exit(crud_win))
        
     bt_ins_product_list.pack(side='left', padx=5)
@@ -148,12 +179,24 @@ def show_product_list(product_dict):
     root.eval(f'tk::PlaceWindow {str(crud_win)} center')
 
 def crud_win_exit(w1):
+    """
+        The crud_win_exit function closes the window 
+        received as a parameter and redisplays the 
+        previous one.
+    """
     w1.destroy()
     root.deiconify()
 
 
 def ins_new_product(crud_win, product_dict): 
     crud_win.destroy()
+
+    """
+        This function creates the new product insertion window, 
+        and associates the save_new_product(...) function with
+        the btn_save_prod button, whose responsibility is to insert
+        a new item into the product list.
+    """
     # Creating insert product window
     insert_product_window = tk.Toplevel(root)
     insert_product_window.title('Pegasus - Product list management')
@@ -420,6 +463,11 @@ def save_dictionary_in_file(filename,dict, header):
             csv_file.write(f'{l[0]},{l[1]},{l[2]}\n')
 
 def save_new_product(product_dict, id,name,qtd):
+    """
+        This function receives data from the product 
+        being added to the list, checks if it exists, 
+        and if it does not, saves it to the file.
+    """
     try:
         if id in product_dict:
             code = 0
@@ -433,9 +481,12 @@ def save_new_product(product_dict, id,name,qtd):
             #Save new product in file
             file = path + filename
             header = 'Product #,Name,Price\n'
+            #The function save_dictionary_in_file(file,product_dict, header),
+            #saves the new item in the file that contains the list of stock products.
             save_dictionary_in_file(file,product_dict, header)
             code = 1
             msg = 'Data saved successfully'
+            #The following function clears the product inclusion screen.
             insert_product_clear()
     except ValueError as val_err:
         code = 2
@@ -444,9 +495,14 @@ def save_new_product(product_dict, id,name,qtd):
         code = 2
         msg = f'File {file} not found'
     finally:
+        #The messagebox function is a hub
+        #for showing dialog boxes to the user.
         messagebox_manager(code,msg)
+        return code
         
 def save_alt_product(product_dict, id,name,qtd):
+    #The following function is used to save 
+    #changes to items in the product list to a file.
     try:
         if id in product_dict:
             Price = float(qtd)
@@ -457,6 +513,8 @@ def save_alt_product(product_dict, id,name,qtd):
              #Save new product in file
             file = path + filename
             header = 'Product #,Name,Price\n'
+            #The function save_dictionary_in_file(file,product_dict, header),
+            #saves the new item in the file that contains the list of stock products.
             save_dictionary_in_file(file,product_dict, header)
             code = 1
             msg = 'Data saved successfully'
@@ -471,10 +529,15 @@ def save_alt_product(product_dict, id,name,qtd):
         code = 2
         msg = f'File {file} not found'
     finally:
+        #The messagebox function is a hub
+        #for showing dialog boxes to the user.
         messagebox_manager(code,msg)
-
+        return code
 
 def exec_del_product(product_dict, id):
+    #The following function is used to 
+    #delete items from the product list
+    #and save the new updated list to a file.
     try:  
         code = -1
         if id in product_dict:
@@ -483,6 +546,8 @@ def exec_del_product(product_dict, id):
                 product_dict.pop(id)
                 file = path + filename
                 header = 'Product #,Name,Price\n'
+                #The function save_dictionary_in_file(file,product_dict, header),
+                #saves the new item in the file that contains the list of stock products.
                 save_dictionary_in_file(file,product_dict, header)
                 code = 1
                 msg = 'Data erased successfully'
@@ -497,15 +562,23 @@ def exec_del_product(product_dict, id):
         code = 2
         msg = f'File {file} not found'
     finally:
+        #The messagebox function is a hub
+        #for showing dialog boxes to the user.
         messagebox_manager(code,msg)
+        return code
 
 #Functions section end----------------------------------------------------------- 
 
 #Product Management Section End -------------------------------------------------
 
-#Request management section beguin
+"""
+    The following section contains the creation and use of the request
+    management module graphical interface and the associated supporting
+    functions.
 
-#Request window GUI
+"""
+#Request management section beguin-----------------------------------------------
+#Creating request GUI
 def request_window(product_dict):
 
     request_list = [['Id', 'Name', 'Price','Quantity', 'Total']]
@@ -697,14 +770,15 @@ def delete_request_item(request_list, req_product_id):
                 code = 5
                 msg = f'The product {req_product_id} is not in the order.'
                 messagebox_manager(code, msg)
+    return request_list
             
-    print(i)
 
 def save_request_item(product_list):
+        #The following functionality saves the order 
+        #items to a file.
         code = 0
         filename = path + filename_request
         with open(filename, "w") as csv_file:
-        #Save first line
             for i in product_list:
                 csv_file.write(f'{i[0]},{i[3]}\n')   
             code = 1 

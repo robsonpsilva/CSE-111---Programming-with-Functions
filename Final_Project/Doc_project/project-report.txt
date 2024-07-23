@@ -1,0 +1,76 @@
+Second Report for a Student Chosen Project
+
+Do the following:
+
+1. In the table below, list the dates, amount of time spent, and
+description of the work that you did on your project. Follow the example
+that is in the first row of the table below. Include the time you spent
+doing any of the following:
+    a. discussing your project with your teacher, tutor, or fellow students
+    b. researching by reading articles and watching applicable videos
+    c. designing your project by drawing diagrams and other applicable documents
+    d. writing experimental code
+    d. writing code for your project
+    e. writing test functions
+    f. debugging your code
+    g. any other activity that helped you complete your project
+
+=============Example====================
+            Time Spent
+   Date       (hours)   Description of Work
+----------  ----------  -------------------------
+2021-12-03      2.5     Wrote two program functions and two test functions
+2021-12-03      .5      Watched video on 
+=============Example====================
+
+=============Example====================
+
+
+2. In Canvas, submit this completed text file, your Python program, your
+Python test file, and any project data files such as .txt and .csv files and
+link to video walkthrough if needed.
+
+
+
+=============Report====================
+
+            Time Spent
+   Date       (hours)   Description of Work
+----------  ----------  -------------------------
+2024-07-16      2.0     I created the main body of the application, 
+			which includes the main(), system_setup() and 
+			show_main_window(product_dict) functions.
+
+2024-07-16      1.0      I watched videos, researched and studied how to use the tkinter library.
+
+2024-07-17      1.0      I solved problems with positioning components on the main screen that is 
+			 created by the show_main_window(product_dict) function.
+
+2024-07-17      1.0     I researched on the internet how to associate and call functions when we 
+			click on a button.
+
+2024-07-17      1.0     I talked to my classmates about my project at our weekly meeting.
+
+2024-07-18      2.0     Creation of the product and stock list management screen, creating 
+			and filling a table with the items loaded from the products.csv file 
+
+2024-07-18      0.5     Researching and learning how to create and populate a table on tkinter.
+
+2024-07-19      2.5     Creating functions to display the new product insertion screen and all 
+			the logic to insert and display the result in the table.
+
+2024-07-22      3.0     I completed the creation of the screens and functionalities to update, 
+			delete and save the product list. It is important to say that the 
+			operations update the table on the screen and also save the data in the 
+			product.csv file.
+
+2024-07-22      0.5     Start of creating the graphical interface for the request window.
+
+2024-07-23      2.0     Completion of the graphical interface for the order management screen (request) and 				creation of the logic for inserting, deleting and saving request items.
+
+
+
+
+
+
+
