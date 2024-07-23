@@ -8,6 +8,7 @@ from tkinter import messagebox
 
 key_column_index = 0
 filename = 'products.csv'
+filename_request = 'request.csv'
 path = 'Final_Project/'
 
 
@@ -548,19 +549,22 @@ def request_window(product_dict):
     req_lb4.grid(row=3, column=0, sticky=tk.E, padx=5, pady=5)
     
     global req_product_qtd_entry
-    req_product_qtd_entry = ttk.Entry(req_frame1, width = 20)
+    req_product_qtd_entry = ttk.Entry(req_frame1, width = 25)
     req_product_qtd_entry.grid(row=3, column=1, sticky=tk.W, padx=5, pady=5, columnspan=3)
 
-    req_btn_close = ttk.Button(req_frame2, text='Close', width = 30, command= lambda:crud_win_exit(req_win))
+    req_btn_close = ttk.Button(req_frame2, text='Close', width = 25, command= lambda:crud_win_exit(req_win))
     req_btn_close.grid(row=4, column=0, sticky=tk.W, padx=5, pady=5)
     
-    req_btn_insert = ttk.Button(req_frame2, text='Insert', width = 30, 
+    req_btn_insert = ttk.Button(req_frame2, text='Insert', width = 25, 
                                 command= lambda:insert_request_item(product_list, req_product_id.get(), req_product_name.cget("text"),
                                                                     req_product_price.cget("text"), req_product_qtd_entry.get()))
     req_btn_insert.grid(row=4, column=1, sticky=tk.W, padx=5, pady=5)
 
-    req_btn_delete = ttk.Button(req_frame2, text='Delete', width = 30, command= lambda:delete_request_item(product_list, req_product_id.get()))
+    req_btn_delete = ttk.Button(req_frame2, text='Delete', width = 25, command= lambda:delete_request_item(product_list, req_product_id.get()))
     req_btn_delete.grid(row=4, column=2, sticky=tk.W, padx=5, pady=5)
+
+    req_btn_save = ttk.Button(req_frame2, text='Save', width = 25, command= lambda:save_request_item(product_list))
+    req_btn_save.grid(row=4, column=3, sticky=tk.W, padx=5, pady=5)
 
     #Centralizing the window
     root.eval(f'tk::PlaceWindow {str(req_win)} center')   
@@ -667,7 +671,12 @@ def delete_request_item(product_list, req_product_id):
                                     font=('Arial',10,'bold'), borderwidth=2, relief="groove", text=product_list[i][j])
                     self.e.grid(row=i, column=j,sticky="nsew")
 
-    
+
+    #Cleaning the grid, so we can rebuild it with the updated data.
+    for widget in req_frame3.winfo_children():
+        widget.destroy() 
+
+    #Deleting item and constructing a new table on screen
     total_rows = len(product_list)
     k = 0
     for j in product_list:
@@ -688,6 +697,8 @@ def delete_request_item(product_list, req_product_id):
             
     print(i)
 
+def save_request_item(product_list):
+    
 # Call main to start this program.
 if __name__ == "__main__":
     main()
