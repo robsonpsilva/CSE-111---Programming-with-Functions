@@ -572,6 +572,8 @@ def exec_del_product(product_dict, id):
         #for showing dialog boxes to the user.
         messagebox_manager(code,msg, del_product_id_entry)
         return code
+    
+
 
 #Functions section end----------------------------------------------------------- 
 
@@ -653,7 +655,7 @@ def request_window(product_dict):
 
 #Functions
 
-def insert_request_item(product_dict, request_list, req_product_id, req_product_name, req_product_price, req_product_qtd_entry):
+def insert_request_item(product_dict, request_list, req_id, req_product_name, req_product_price, req_product_qtd):
     
     #Creating and populating product list table
     #This screen show the product list
@@ -698,24 +700,27 @@ def insert_request_item(product_dict, request_list, req_product_id, req_product_
                     self.e.grid(row=i, column=j,sticky="nsew")
 
     # Testing if product exists in product list
-    if req_product_id in product_dict:
-        if req_product_price.isdigit():
-            if req_product_qtd_entry.isdigit():
-                request_list.append([req_product_id, req_product_name, req_product_price, 
-                                req_product_qtd_entry, f'{(float(req_product_price) * float(req_product_qtd_entry)):.2f}'])
-                # initializing table
-                # find total number of rows and
-                # columns in list
-                total_rows = len(request_list)
-                total_columns = len(request_list[0])
-    
-                t = Table(req_frame3, total_rows, total_columns)
+    if req_id in product_dict:
+        if req_product_qtd.isdigit():
+            request_list.append([req_id, req_product_name, req_product_price, 
+                            req_product_qtd, f'{(float(req_product_price) * float(req_product_qtd)):.2f}'])
+            # initializing table
+            # find total number of rows and
+            # columns in list
+            total_rows = len(request_list)
+            total_columns = len(request_list[0])
+
+            t = Table(req_frame3, total_rows, total_columns)
+        else:
+            code = 1
+            msg = 'Invalid quantity value'
+            messagebox_manager(code, msg, req_product_qtd_entry)
     else:
         code = 1
         msg = 'Invalid product'
         messagebox_manager(code, msg, req_product_id)
 
-def delete_request_item(request_list, req_product_id):
+def delete_request_item(request_list, id):
     
     #Creating and populating product list table
     #This screen show the product list
@@ -759,29 +764,29 @@ def delete_request_item(request_list, req_product_id):
                                     font=('Arial',10,'bold'), borderwidth=2, relief="groove", text=request_list[i][j])
                     self.e.grid(row=i, column=j,sticky="nsew")
 
-
-    #Cleaning the grid, so we can rebuild it with the updated data.
-    for widget in req_frame3.winfo_children():
-        widget.destroy() 
-
     #Deleting item and constructing a new table on screen
     total_rows = len(request_list)
     k = 0
     for j in request_list:
         try:
             k += 1
-            i = j.index(req_product_id)
+            i = j.index(id)
             del request_list[k-1]
-            code = 6
-            msg =f'Product {req_product_id} deleted successfully .'
+            code = 1
+            msg =f'Product {id} deleted successfully .'
             total_rows = len(request_list)
             total_columns = len(request_list[0])
-            t = Table(req_frame3, total_rows, total_columns)
+            if __name__ == "__main__":
+                #Cleaning the grid, so we can rebuild it with the updated data.
+                for widget in req_frame3.winfo_children():
+                    widget.destroy() 
+                t = Table(req_frame3, total_rows, total_columns)
         except ValueError as v_err:
             if k == total_rows: 
                 code = 5
-                msg = f'The product {req_product_id} is not in the order.'
-                messagebox_manager(code, msg,req_product_qtd_entry)
+                msg = f'The product {id} is not in the order.'
+    if __name__ == "__main__":
+        messagebox_manager(code, msg, req_product_id)
     return request_list
             
 
@@ -789,14 +794,22 @@ def save_request_item(product_list):
         #The following functionality saves the order 
         #items to a file.
         print(product_list)
-        code = 0
-        filename = path + filename_request
-        with open(filename, "w") as csv_file:
-            for i in product_list:
-                csv_file.write(f'{i[0]},{i[3]}\n')   
-            code = 1 
-        return code
-        
+        try:
+            code = 0
+            filename = path + filename_request
+            with open(filename, "w") as csv_file:
+                for i in product_list:
+                    csv_file.write(f'{i[0]},{i[3]}\n')   
+                code = 1
+                msg = f'Data saved successfully'
+        except FileNotFoundError as file_err:
+            code = 2
+            msg = f'File {filename} not found'
+        finally:
+            if __name__ == "__main__":
+                messagebox_manager(code, msg,req_product_qtd_entry)
+            return code
+
 # Call main to start this program.
 if __name__ == "__main__":
     main()

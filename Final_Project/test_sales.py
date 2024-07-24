@@ -1,5 +1,5 @@
 from sales import save_new_product, save_dictionary_in_file, save_alt_product
-from sales import save_request_item, delete_request_item, read_dictionary_from_file
+from sales import save_request_item, delete_request_item
 import pytest
 
 
@@ -67,7 +67,24 @@ def test_save_alt_product():
     assert dict['W231'] == ['W231','32 oz granola', '3.33' ]
 
 def test_save_request_item():
-    save_request_item(product_list)
+    request_list = [['Id', 'Name', 'Price', 'Quantity', 'Total'], 
+                    ['D150', '1 gallon milk', '2.85', '2', '5.70'], 
+                    ['D083', '1 cup yogurt', '0.75', '3', '2.25'], 
+                    ['D215', '1 lb cheddar cheese', '3.35', '4', '13.40']]
+    assert save_request_item(request_list) == 1
+
+def test_delete_request_item():
+    request_list = [['Id', 'Name', 'Price', 'Quantity', 'Total'], 
+                    ['D150', '1 gallon milk', '2.85', '2', '5.70'], 
+                    ['D083', '1 cup yogurt', '0.75', '3', '2.25'], 
+                    ['D215', '1 lb cheddar cheese', '3.35', '4', '13.40']]
+    test_list = [['Id', 'Name', 'Price', 'Quantity', 'Total'], 
+                    ['D150', '1 gallon milk', '2.85', '2', '5.70'],
+                    ['D215', '1 lb cheddar cheese', '3.35', '4', '13.40']]
+    result_list = delete_request_item(request_list, 'D083')
+    assert result_list == test_list
+
+
 
 # Call the main function that is part of pytest so that the
 # computer will execute the test functions in this file.
