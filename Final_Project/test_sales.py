@@ -1,6 +1,6 @@
 #Robson Paulo da Silva
 from sales import save_new_product, save_dictionary_in_file, save_alt_product
-from sales import save_request_item, delete_request_item, read_dictionary_from_file
+from sales import save_request_file, delete_request_item, read_stock_data
 import csv #We use this library to be able to import and manipulate CSV files.
 import pytest
 
@@ -22,7 +22,7 @@ def test_save_new_product():
     #Loading product list
     path = 'Final_Project/'
     file = path + filename
-    products = read_dictionary_from_file(file, key_column_index)
+    products = read_stock_data(file, key_column_index)
     assert products['D150'] == ['D150', '1 gallon milk', '2.85']
     assert products['D083'] == ['D083', '1 cup yogurt', '0.75']
     assert products['D215'] == ['D215', '1 lb cheddar cheese', '3.35']
@@ -42,7 +42,7 @@ def test_save_dictionary_in_file():
     
     save_dictionary_in_file(file,dict, header)
     
-    products = read_dictionary_from_file(file, key_column_index)
+    products = read_stock_data(file, key_column_index)
     assert products['D150'] == ['D150', '1 gallon milk', '2.85']
     assert products['D083'] == ['D083', '1 cup yogurt', '0.75']
     assert products['D215'] == ['D215', '1 lb cheddar cheese', '3.35']
@@ -76,7 +76,7 @@ def test_save_alt_product():
     assert dict['D215'] == ['D215', '1 lb cheddar cheese', '3.35']
     assert dict['W231'] == ['W231','32 oz granola', '3.33' ]
 
-def test_save_request_item():
+def test_save_request_file():
     
     filename_request = 'request.csv'
     path = 'Final_Project/'
@@ -87,7 +87,7 @@ def test_save_request_item():
                     ['D083', '1 cup yogurt', '0.75', '3', '2.25'], 
                     ['D215', '1 lb cheddar cheese', '3.35', '4', '13.40']]
     
-    assert save_request_item(request_list) == 1
+    assert save_request_file(request_list) == 1
 
     filename = path + filename_request
     with open(filename, "rt") as csv_file:

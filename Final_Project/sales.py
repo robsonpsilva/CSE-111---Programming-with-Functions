@@ -158,8 +158,8 @@ def show_product_list(product_dict):
     #At this point we associate functions that will
     #handle the insertion, alteration and deletion 
     #flows of items in the product list.
-    bt_ins_product_list = ttk.Button(frame2, text='Insert', width = 20, command= lambda:ins_new_product(crud_win, product_dict))
-    bt_alt_product_list = ttk.Button(frame2, text='Update', width =  20, command= lambda:alt_product(crud_win,product_dict))
+    bt_ins_product_list = ttk.Button(frame2, text='Insert', width = 20, command= lambda:insert_stock_item(crud_win, product_dict))
+    bt_alt_product_list = ttk.Button(frame2, text='Update', width =  20, command= lambda:update_stock_item(crud_win,product_dict))
     bt_del_product_list = ttk.Button(frame2, text='Delete', width = 20, command= lambda:del_product(crud_win,product_dict))
 
           
@@ -187,7 +187,7 @@ def crud_win_exit(w1):
     root.deiconify()
 
 
-def ins_new_product(crud_win, product_dict): 
+def insert_stock_item(crud_win, product_dict): 
     crud_win.destroy()
 
     """
@@ -239,7 +239,7 @@ def insert_product_clear():
     #Cleaning product Price entry
     product_qtd_entry.delete(0, tk.END)
     
-def alt_product(crud_win,product_dict):
+def update_stock_item(crud_win,product_dict):
     crud_win.destroy()
     # Creating insert product window
     alt_product_window = tk.Toplevel(root)
@@ -415,11 +415,11 @@ Such as reading and saving products in the system product list.
 def system_setup():
     #Loading product list
     file = path + filename
-    products = read_dictionary_from_file(file, key_column_index)
+    products = read_stock_data(file, key_column_index)
 
     return products
 
-def read_dictionary_from_file(filename, key_column_index):
+def read_stock_data(filename, key_column_index):
     """Read the contents of a CSV file into a compound
     dictionary and return the dictionary.
     Parameters
@@ -646,7 +646,7 @@ def request_window(product_dict):
     req_btn_delete = ttk.Button(req_frame2, text='Delete', width = 25, command= lambda:delete_request_item(request_list, req_product_id.get()))
     req_btn_delete.grid(row=4, column=2, sticky=tk.W, padx=5, pady=5)
 
-    req_btn_save = ttk.Button(req_frame2, text='Save', width = 25, command= lambda:save_request_item(request_list))
+    req_btn_save = ttk.Button(req_frame2, text='Save', width = 25, command= lambda:save_request_file(request_list))
     req_btn_save.grid(row=4, column=3, sticky=tk.W, padx=5, pady=5)
 
     #Centralizing the window
@@ -789,7 +789,7 @@ def delete_request_item(request_list, id):
     return request_list
             
 
-def save_request_item(product_list):
+def save_request_file(product_list):
         #The following functionality saves the order 
         #items to a file.
         try:
