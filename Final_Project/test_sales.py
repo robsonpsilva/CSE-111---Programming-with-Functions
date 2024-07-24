@@ -1,5 +1,5 @@
 from sales import save_new_product, save_dictionary_in_file, save_alt_product
-from sales import save_request_item, delete_request_item
+from sales import save_request_item, delete_request_item, read_dictionary_from_file
 import pytest
 
 
