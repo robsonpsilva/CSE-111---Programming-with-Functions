@@ -4,12 +4,13 @@ import pytest
 
 
 
-key_column_index = 0
-filename = 'products.csv'
+
 filename_request = 'request.csv'
 path = 'Final_Project/'
 
 def test_save_new_product():
+    key_column_index = 0
+    filename = 'products.csv'
     product_dict={'D150': ['D150', '1 gallon milk', '2.85'],
               'D083': ['D083', '1 cup yogurt', '0.75'], 
               'D215': ['D215', '1 lb cheddar cheese', '3.35']}
@@ -31,6 +32,8 @@ def test_save_new_product():
 
 def test_save_dictionary_in_file():
     
+    key_column_index = 0
+    filename = 'products.csv'
     file = path + filename
     header = 'Product #,Name,Price\n'
     dict={'D150': ['D150', '1 gallon milk', '2.85'],
@@ -63,7 +66,8 @@ def test_save_alt_product():
     assert dict['D215'] == ['D215', '1 lb cheddar cheese', '3.35']
     assert dict['W231'] == ['W231','32 oz granola', '3.33' ]
 
-
+def test_save_request_item():
+    save_request_item(product_list)
 
 # Call the main function that is part of pytest so that the
 # computer will execute the test functions in this file.
