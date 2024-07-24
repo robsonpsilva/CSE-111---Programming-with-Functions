@@ -547,7 +547,7 @@ def exec_del_product(product_dict, id):
     try:  
         code = -1
         if id in product_dict:
-            answer = messagebox_manager(3, f'Confirms deletion of the product with ID {id}', product_id_entry)
+            answer = messagebox_manager(3, f'Confirms deletion of the product with ID {id}', del_product_id_entry)
             if answer:
                 product_dict.pop(id)
                 file = path + filename
@@ -570,7 +570,7 @@ def exec_del_product(product_dict, id):
     finally:
         #The messagebox function is a hub
         #for showing dialog boxes to the user.
-        messagebox_manager(code,msg, product_id_entry)
+        messagebox_manager(code,msg, del_product_id_entry)
         return code
 
 #Functions section end----------------------------------------------------------- 
@@ -699,16 +699,17 @@ def insert_request_item(product_dict, request_list, req_product_id, req_product_
 
     # Testing if product exists in product list
     if req_product_id in product_dict:
-
-        request_list.append([req_product_id, req_product_name, req_product_price, 
-                         req_product_qtd_entry, f'{(float(req_product_price) * float(req_product_qtd_entry)):.2f}'])
-        # initializing table
-        # find total number of rows and
-        # columns in list
-        total_rows = len(request_list)
-        total_columns = len(request_list[0])
+        if req_product_price.isdigit():
+            if req_product_qtd_entry.isdigit():
+                request_list.append([req_product_id, req_product_name, req_product_price, 
+                                req_product_qtd_entry, f'{(float(req_product_price) * float(req_product_qtd_entry)):.2f}'])
+                # initializing table
+                # find total number of rows and
+                # columns in list
+                total_rows = len(request_list)
+                total_columns = len(request_list[0])
     
-        t = Table(req_frame3, total_rows, total_columns)
+                t = Table(req_frame3, total_rows, total_columns)
     else:
         code = 1
         msg = 'Invalid product'
@@ -780,7 +781,7 @@ def delete_request_item(request_list, req_product_id):
             if k == total_rows: 
                 code = 5
                 msg = f'The product {req_product_id} is not in the order.'
-                messagebox_manager(code, msg,req_product_id)
+                messagebox_manager(code, msg,req_product_qtd_entry)
     return request_list
             
 
