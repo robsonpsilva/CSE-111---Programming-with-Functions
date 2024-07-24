@@ -793,7 +793,6 @@ def delete_request_item(request_list, id):
 def save_request_item(product_list):
         #The following functionality saves the order 
         #items to a file.
-        print(product_list)
         try:
             code = 0
             filename = path + filename_request
