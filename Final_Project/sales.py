@@ -1,3 +1,4 @@
+#Robson Paulo da Silva
 import csv #We use this library to be able to import and manipulate CSV files.
 
 import tkinter as tk #We use tkinter to generate the graphical interface
@@ -10,10 +11,8 @@ filename = 'products.csv'
 filename_request = 'request.csv'
 path = 'Final_Project/'
 
-
 global crud_win
 global insert_product_window 
-
 
 def main():
     try:
