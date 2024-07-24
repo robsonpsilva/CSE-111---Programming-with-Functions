@@ -497,8 +497,10 @@ def save_new_product(product_dict, id,name,qtd):
     finally:
         #The messagebox function is a hub
         #for showing dialog boxes to the user.
-        messagebox_manager(code,msg)
-        return code
+        if __name__ == "__main__":
+            #If the function is called by the test module, then it does not execute the dialog box.
+            messagebox_manager(code,msg)
+        return product_dict
         
 def save_alt_product(product_dict, id,name,qtd):
     #The following function is used to save 
@@ -531,8 +533,9 @@ def save_alt_product(product_dict, id,name,qtd):
     finally:
         #The messagebox function is a hub
         #for showing dialog boxes to the user.
-        messagebox_manager(code,msg)
-        return code
+        if __name__ == "__main__":
+            messagebox_manager(code,msg)
+        return product_dict
 
 def exec_del_product(product_dict, id):
     #The following function is used to 
