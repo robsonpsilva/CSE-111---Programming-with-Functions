@@ -1,0 +1,46 @@
+=============Report====================================================================================
+
+            Time Spent
+   Date       (hours)   Description of Work
+----------  ----------  -------------------------------------------------------------------------------
+2024-07-16      2.0     I created the main body of the application, 
+			which includes the main(), system_setup() and 
+			show_main_window(product_dict) functions.
+
+2024-07-16      1.0     Reading articles and watching applicable vídeos -
+			I watched videos, researched and studied how to use the tkinter library.
+
+2024-07-17      1.0     I solved problems with positioning components on the main screen that is 
+			 created by the show_main_window(product_dict) function.
+
+2024-07-17      1.0     I researched on the internet how to associate and call functions when we 
+			click on a button.
+
+2024-07-17      1.0     I talked to my classmates about my project at our weekly meeting.
+
+2024-07-18      2.0     Creation of the product and stock list management screen, creating 
+			and filling a table with the items loaded from the products.csv file 
+
+2024-07-18      0.5     Researching and learning how to create and populate a table on tkinter.
+
+2024-07-19      2.5     Creating functions to display the new product insertion screen and all 
+			the logic to insert and display the result in the table.
+
+2024-07-22      3.0     I completed the creation of the screens and functionalities to update, 
+			delete and save the product list. It is important to say that the 
+			operations update the table on the screen and also save the data in the 
+			product.csv file.
+
+2024-07-22      0.5     Start of creating the graphical interface for the request window.
+
+2024-07-23      2.0     Completion of the graphical interface for the order management screen (request) and 
+			creation of the logic for inserting, deleting and saving request items.
+
+2024-07-24      2.0     Completion of automated tests and final manual tests.
+
+
+
+
+
+
+
